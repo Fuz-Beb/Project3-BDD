@@ -71,13 +71,22 @@ public class GestionJury
      * 
      * @param idProces
      * @param nas
+     * @throws Exception
      */
-    public void assignerProces(int idProces, int nas)
+    public void assignerProces(int idProces, int nas) throws Exception
     {
-        if (!proces.existe(idProces))
-            throw new IFT287Exception("Proces n'existe pas : " + idProces);
-        if (!proces.devantJury(idProces))
-            throw new IFT287Exception("Le proces " + idProces + "doit se tenir devant un juge seul");
-        jury.assignerProces(idProces, nas);
+        try
+        {
+            if (!proces.existe(idProces))
+                throw new IFT287Exception("Proces n'existe pas : " + idProces);
+            if (!proces.devantJury(idProces))
+                throw new IFT287Exception("Le proces " + idProces + "doit se tenir devant un juge seul");
+            jury.assignerProces(idProces, nas);
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
     }
 }
