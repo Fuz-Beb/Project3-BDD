@@ -1,7 +1,5 @@
 package tp3;
 
-import java.sql.SQLException;
-
 /**
  * Gestion des transactions de la table jury.
  */

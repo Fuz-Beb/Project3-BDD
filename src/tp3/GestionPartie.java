@@ -21,7 +21,7 @@ public class GestionPartie
      * @param cx
      * @param partie
      * @param avocat
-     * @throws IFT287Exception 
+     * @throws IFT287Exception
      */
     public GestionPartie(Connexion cx, TablePartie partie, TableAvocat avocat) throws IFT287Exception
     {

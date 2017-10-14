@@ -15,6 +15,7 @@ public class GestionJuge
      * Constructeur de confort
      * 
      * @param juge
+     * @param proces 
      * @throws IFT287Exception
      */
     public GestionJuge(TableJuge juge, TableProces proces) throws IFT287Exception
