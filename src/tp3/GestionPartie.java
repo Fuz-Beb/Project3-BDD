@@ -5,8 +5,6 @@ package tp3;
 
 import java.sql.SQLException;
 
-import Bibliotheque.BiblioException;
-
 /**
  * @author Bebo
  *
@@ -23,8 +21,9 @@ public class GestionPartie
      * @param cx
      * @param partie
      * @param avocat
+     * @throws IFT287Exception 
      */
-    public GestionPartie(Connexion cx, TablePartie partie, TableAvocat avocat)
+    public GestionPartie(Connexion cx, TablePartie partie, TableAvocat avocat) throws IFT287Exception
     {
         this.cx = partie.getConnexion();
         if (partie.getConnexion() != avocat.getConnexion())
