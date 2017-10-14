@@ -60,26 +60,9 @@ public class Devoir3
     private static PreparedStatement stmtSeanceNonTerminee;
     private static PreparedStatement stmtSupprimerSeance;
 
-    // Jury
-    private static PreparedStatement stmtExisteJury;
-    private static PreparedStatement stmtInsertJury;
-    private static PreparedStatement stmtSelectJurys;
-    private static PreparedStatement stmtInsertJuryDansProces;
-
-    // Juge
-    private static PreparedStatement stmtExisteJuge;
-    private static PreparedStatement stmtInsertJuge;
-    private static PreparedStatement stmtSelectJuges;
-    private static PreparedStatement stmtRetirerJuge;
-    private static PreparedStatement stmtChangeDisponibiliteJuge;
-
     // Partie
     private static PreparedStatement stmtExistePartie;
     private static PreparedStatement stmtInsertPartie;
-
-    // Avocat
-    private static PreparedStatement stmtExisteAvocat;
-    private static PreparedStatement stmtInsertAvocat;
 
     /**
      * La fonction principale
@@ -151,35 +134,11 @@ public class Devoir3
         stmtSupprimerSeance = cx.getConnection().prepareStatement("delete from \"Seance\" where \"id\" = ?");
         stmtInsertSeance = cx.getConnection()
                 .prepareStatement("insert into \"Seance\" (\"id\", \"Proces_id\", \"date\") values (?,?,?)");
-
-        // Jury
-        stmtSelectJurys = cx.getConnection().prepareStatement("select * from \"Jury\" where \"Proces_id\" is null");
-        stmtInsertJuryDansProces = cx.getConnection()
-                .prepareStatement("update \"Jury\" set \"Proces_id\" = ? where \"nas\" = ?");
-        stmtExisteJury = cx.getConnection().prepareStatement("select * from \"Jury\" where \"nas\" = ?");
-        stmtInsertJury = cx.getConnection().prepareStatement(
-                "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\", \"Proces_id\") "
-                        + "values (?,?,?,?,?,null)");
-
-        // Juge
-        stmtSelectJuges = cx.getConnection().prepareStatement("select * from \"Juge\" where \"disponible\" = true");
-        stmtExisteJuge = cx.getConnection().prepareStatement("select * from \"Juge\" where \"id\" = ?");
-        stmtInsertJuge = cx.getConnection()
-                .prepareStatement("insert into \"Juge\" (\"id\", \"prenom\", \"nom\", \"age\") values (?,?,?,?)");
-        stmtRetirerJuge = cx.getConnection()
-                .prepareStatement("update \"Juge\" set \"quitterJustice\" = true, \"disponible\" = false where \"id\" = ?");
-        stmtChangeDisponibiliteJuge = cx.getConnection()
-                .prepareStatement("update \"Juge\" set \"disponible\" = ? where \"id\" = ?");
-
+        
         // Partie
         stmtExistePartie = cx.getConnection().prepareStatement("select * from \"Partie\" where \"id\" = ?");
         stmtInsertPartie = cx.getConnection().prepareStatement(
                 "insert into \"Partie\" (\"id\", \"prenom\", \"nom\", \"Avocat_id\") values (?,?,?,?)");
-        
-        // Avocat
-        stmtExisteAvocat = cx.getConnection().prepareStatement("select * from \"Avocat\" where \"id\" = ?");
-        stmtInsertAvocat = cx.getConnection()
-                .prepareStatement("insert into \"Avocat\" (id, prenom, nom, type) values (?,?,?,?)");
     }
 
     /**
@@ -199,42 +158,7 @@ public class Devoir3
                 // les commandes de votre programme. Vous pouvez ajouter autant
                 // de else if que necessaire. Vous n'avez pas a traiter la
                 // commande "quitter".
-                if (command.equals("ajouterJuge"))
-                {
-                    // Lecture des parametres
-                    int idJuge = readInt(tokenizer);
-                    String prenomJuge = readString(tokenizer);
-                    String nomJuge = readString(tokenizer);
-                    int ageJuge = readInt(tokenizer);
-
-                    // Exemple a supprimer quand on rend le projet
-                    // String param1 = readString(tokenizer);
-                    // Date param2 = readDate(tokenizer);
-                    // int param3 = readInt(tokenizer);
-
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerAjouterJuge(idJuge, prenomJuge, nomJuge, ageJuge);
-                }
-                else if (command.equals("retirerJuge"))
-                {
-                    // Lecture des parametres
-                    int idJuge = readInt(tokenizer);
-
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerRetirerJuge(idJuge);
-                }
-                else if (command.equals("ajouterAvocat"))
-                {
-                    // Lecture des parametres
-                    int idAvocat = readInt(tokenizer);
-                    String prenomAvocat = readString(tokenizer);
-                    String nomAvocat = readString(tokenizer);
-                    int typeAvocat = readInt(tokenizer);
-
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerAjouterAvocat(idAvocat, prenomAvocat, nomAvocat, typeAvocat);
-                }
-                else if (command.equals("ajouterPartie"))
+                if (command.equals("ajouterPartie"))
                 {
                     // Lecture des parametres
                     int idPartie = readInt(tokenizer);
@@ -258,27 +182,6 @@ public class Devoir3
                     // Appel de la methode qui traite la transaction specifique
                     effectuerCreerProces(idProces, idJuge, dateInitiale, devantJury, idPartieDefenderesse,
                             idPartiePoursuivante);
-                }
-                else if (command.equals("inscrireJury"))
-                {
-                    // Lecture des parametres
-                    int nasJury = readInt(tokenizer);
-                    String prenomJury = readString(tokenizer);
-                    String nomJury = readString(tokenizer);
-                    String sexeJury = readString(tokenizer);
-                    int ageJury = readInt(tokenizer);
-
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerInscrireJury(nasJury, prenomJury, nomJury, sexeJury, ageJury);
-                }
-                else if (command.equals("assignerJury"))
-                {
-                    // Lecture des parametres
-                    int nasJury = readInt(tokenizer);
-                    int idProces = readInt(tokenizer);
-
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerAssignerJury(nasJury, idProces);
                 }
                 else if (command.equals("ajouterSeance"))
                 {
@@ -307,11 +210,6 @@ public class Devoir3
                     // Appel de la methode qui traite la transaction specifique
                     effectuerTerminerProces(idProces, decisionProces);
                 }
-                else if (command.equals("afficherJuges"))
-                {
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerAfficherJuges();
-                }
                 else if (command.equals("afficherProces"))
                 {
                     // Lecture des parametres
@@ -319,11 +217,6 @@ public class Devoir3
 
                     // Appel de la methode qui traite la transaction specifique
                     effectuerAfficherProces(idProces);
-                }
-                else if (command.equals("afficherJurys"))
-                {
-                    // Appel de la methode qui traite la transaction specifique
-                    effectuerAfficherJurys();
                 }
                 else
                 {
@@ -335,44 +228,6 @@ public class Devoir3
         {
             System.out.println(" " + e.toString());
             cx.rollback();
-        }
-    }
-
-    /**
-     * Methode d'affichage des jurys
-     * 
-     * @throws SQLException,
-     *             IFT287Exception
-     * 
-     */
-    private static void effectuerAfficherJurys() throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Récupération de la liste des jurys
-            ResultSet rsetJury = stmtSelectJurys.executeQuery();
-            
-            System.out.println("\n\nListe des jurys : ");
-
-            // Si il y a des jurys
-            if (rsetJury.next())
-            {
-                do
-                {
-                    System.out.println(rsetJury.getInt(1) + "\t" + rsetJury.getString(2) + "\t" + rsetJury.getString(3)
-                            + "\t" + rsetJury.getString(4) + "\t" + rsetJury.getInt(5));
-                }
-                while (rsetJury.next());
-            }
-
-            rsetJury.close();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
         }
     }
 
@@ -401,7 +256,8 @@ public class Devoir3
 
             // Affichage des elements du proces conernes
             System.out.println(rsetProces.getInt(1) + "\t" + rsetProces.getInt(2) + "\t" + rsetProces.getString(3)
-                    + "\t" + rsetProces.getInt(4) + "\t" + rsetProces.getInt(5) + "\t" + rsetProces.getInt(6) + "\t" + (rsetProces.getObject(7) != null ? rsetProces.getInt(7) : "non termine"));
+                    + "\t" + rsetProces.getInt(4) + "\t" + rsetProces.getInt(5) + "\t" + rsetProces.getInt(6) + "\t"
+                    + (rsetProces.getObject(7) != null ? rsetProces.getInt(7) : "non termine"));
 
             rsetProces.close();
 
@@ -428,44 +284,6 @@ public class Devoir3
                 System.out.println("Aucune seance n'est liee au proces " + idProces);
                 rsetProces.close();
             }
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
-     * Methode d'affichage des juges actifs et disponibles
-     * 
-     * @throws SQLException,
-     *             IFT287Exception
-     * 
-     */
-    private static void effectuerAfficherJuges() throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Récupération de la liste des juges actifs et disponibles
-            ResultSet rsetJuges = stmtSelectJuges.executeQuery();
-            
-            System.out.println("\nListe des juges actifs et disponibles :");
-
-            if (rsetJuges.next())
-            {
-                // Affichage de la liste des juges actifs et disponibles
-                do
-                {
-                    System.out.println(rsetJuges.getInt(1) + "\t" + rsetJuges.getString(2) + "\t" + rsetJuges.getString(3)
-                            + "\t" + rsetJuges.getInt(4));
-                }
-                while (rsetJuges.next());    
-            }
-
-            rsetJuges.close();
 
             cx.commit();
         }
@@ -526,12 +344,12 @@ public class Devoir3
             // Rendre le juge disponible si il n'a plus de proces en cours
             stmtSelectJugeDansProces.setInt(1, idProces);
             rsetTermineProces = stmtSelectJugeDansProces.executeQuery();
-            
+
             if (rsetTermineProces.next())
             {
                 idJuge = rsetTermineProces.getInt(1);
             }
-            
+
             rsetTermineProces.close();
 
             stmtProcesJugeEnCours.setInt(1, idJuge);
@@ -678,110 +496,6 @@ public class Devoir3
     }
 
     /**
-     * Methode de traitement pour effectuerAssignerJury
-     * 
-     * @param nasJury
-     * @param idProces
-     * @throws SQLException,
-     *             IFT287Exception
-     */
-    private static void effectuerAssignerJury(int nasJury, int idProces) throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Verification du nas du jury
-            stmtExisteJury.setInt(1, nasJury);
-            ResultSet rsetAssignerJury = stmtExisteJury.executeQuery();
-
-            if (!rsetAssignerJury.next())
-            {
-                rsetAssignerJury.close();
-                throw new IFT287Exception("Le jury " + nasJury + " n'existe pas.");
-            }
-            rsetAssignerJury.close();
-
-            // Verification de l'id du proces
-            stmtExisteProces.setInt(1, idProces);
-            rsetAssignerJury = stmtExisteProces.executeQuery();
-
-            if (!rsetAssignerJury.next())
-            {
-                rsetAssignerJury.close();
-                throw new IFT287Exception("Le proces " + idProces + " n'existe pas.");
-            }
-            rsetAssignerJury.close();
-
-            // Verification que le proces doit se tenir devant un jury
-            // "devantJury = 1"
-            stmtVerificationProcesDevantJury.setInt(1, idProces);
-            rsetAssignerJury = stmtVerificationProcesDevantJury.executeQuery();
-
-            if (!rsetAssignerJury.next())
-            {
-                rsetAssignerJury.close();
-                throw new IFT287Exception("Le proces " + idProces + " doit se tenir devant un juge seul");
-            }
-            rsetAssignerJury.close();
-
-            // Ajout du jury au proces concerne
-            stmtInsertJuryDansProces.setInt(1, idProces);
-            stmtInsertJuryDansProces.setInt(2, nasJury);
-            stmtInsertJuryDansProces.executeUpdate();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
-     * Methode de traitement pour effectuerInscrireJury
-     * 
-     * @param nasJury
-     * @param prenomJury
-     * @param nomJury
-     * @param sexeJury
-     * @param ageJury
-     * @throws SQLException,
-     *             IFT287Exception
-     */
-    private static void effectuerInscrireJury(int nasJury, String prenomJury, String nomJury, String sexeJury,
-            int ageJury) throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Verification que le nas du jury n'existe pas deja
-            stmtExisteJury.setInt(1, nasJury);
-            ResultSet rsetInscrireJury = stmtExisteJury.executeQuery();
-
-            if (rsetInscrireJury.next())
-            {
-                rsetInscrireJury.close();
-                throw new IFT287Exception("Jury existe deja: " + nasJury);
-            }
-            rsetInscrireJury.close();
-
-            // Ajout du jury
-            stmtInsertJury.setInt(1, nasJury);
-            stmtInsertJury.setString(2, prenomJury);
-            stmtInsertJury.setString(3, nomJury);
-            stmtInsertJury.setString(4, sexeJury);
-            stmtInsertJury.setInt(5, ageJury);
-            stmtInsertJury.executeUpdate();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
      * Methode de traitement pour effectuerCreerProces
      * 
      * @param idProces
@@ -856,7 +570,7 @@ public class Devoir3
             stmtInsertProces.setInt(5, idPartieDefenderesse);
             stmtInsertProces.setInt(6, idPartiePoursuivante);
             stmtInsertProces.executeUpdate();
-            
+
             // Rendre le juge non disponible
             stmtChangeDisponibiliteJuge.setBoolean(1, false);
             stmtChangeDisponibiliteJuge.setInt(2, idJuge);
@@ -914,139 +628,6 @@ public class Devoir3
             stmtInsertPartie.setString(3, nomPartie);
             stmtInsertPartie.setInt(4, idAvocat);
             stmtInsertPartie.executeUpdate();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
-     * Methode de traitement pour effectuerAjouterAvocat
-     * 
-     * @param idAvocat
-     * @param prenomAvocat
-     * @param nomAvocat
-     * @param typeAvocat
-     * @throws SQLException,
-     *             IFT287Exception
-     */
-    private static void effectuerAjouterAvocat(int idAvocat, String prenomAvocat, String nomAvocat, int typeAvocat)
-            throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Verification que l'id avocat n'existe pas deja
-            stmtExisteAvocat.setInt(1, idAvocat);
-            ResultSet rsetAvocat = stmtExisteAvocat.executeQuery();
-
-            if (rsetAvocat.next())
-            {
-                rsetAvocat.close();
-                throw new IFT287Exception("Avocat existe deja: " + idAvocat);
-            }
-            rsetAvocat.close();
-
-            // Ajout de l'avocat
-            stmtInsertAvocat.setInt(1, idAvocat);
-            stmtInsertAvocat.setString(2, prenomAvocat);
-            stmtInsertAvocat.setString(3, nomAvocat);
-            stmtInsertAvocat.setInt(4, typeAvocat);
-            stmtInsertAvocat.executeUpdate();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
-     * Methode de traitement pour effectuerRetirerJuge
-     * 
-     * @param idJuge
-     * @throws SQLException,
-     *             IFT287Exception
-     */
-    private static void effectuerRetirerJuge(int idJuge) throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Verification que l'id du juge est correcte
-            stmtExisteJuge.setInt(1, idJuge);
-            ResultSet rsetRetirerJuge = stmtExisteJuge.executeQuery();
-
-            if (!(rsetRetirerJuge.next()))
-            {
-                rsetRetirerJuge.close();
-                throw new IFT287Exception("Juge inexistant: " + idJuge);
-            }
-            rsetRetirerJuge.close();
-
-            // Verification que le juge concerne n'a pas encore de proces qui
-            // est non termine
-            stmtProcesJugeEnCours.setInt(1, idJuge);
-            rsetRetirerJuge = stmtProcesJugeEnCours.executeQuery();
-
-            if (rsetRetirerJuge.next())
-            {
-                rsetRetirerJuge.close();
-                throw new IFT287Exception("Le juge " + idJuge + "n'a pas termine tous ses proces");
-            }
-
-            rsetRetirerJuge.close();
-
-            // Retire le juge concerne de la liste des juges actifs et
-            // disponibles
-            stmtRetirerJuge.setInt(1, idJuge);
-            stmtRetirerJuge.executeUpdate();
-
-            cx.commit();
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
-
-    /**
-     * Methode de traitement pour effectuerAjouterJuge
-     * 
-     * @param idJuge
-     * @param prenomJuge
-     * @param nomJuge
-     * @param ageJuge
-     * @throws SQLException,
-     *             IFT287Exception
-     */
-    private static void effectuerAjouterJuge(int idJuge, String prenomJuge, String nomJuge, int ageJuge)
-            throws SQLException, IFT287Exception
-    {
-        try
-        {
-            // Verification que le juge n'existe pas deja
-            stmtExisteJuge.setInt(1, idJuge);
-            ResultSet rsetAjouterJuge = stmtExisteJuge.executeQuery();
-
-            if (rsetAjouterJuge.next())
-            {
-                rsetAjouterJuge.close();
-                throw new IFT287Exception("Juge existe deja: " + idJuge);
-            }
-            rsetAjouterJuge.close();
-
-            // Ajout du juge
-            stmtInsertJuge.setInt(1, idJuge);
-            stmtInsertJuge.setString(2, prenomJuge);
-            stmtInsertJuge.setString(3, nomJuge);
-            stmtInsertJuge.setInt(4, ageJuge);
-            stmtInsertJuge.executeUpdate();
 
             cx.commit();
         }
