@@ -827,7 +827,7 @@ public class Devoir3
             // Verification que l'id des parties sont correctes -
             // PartieDefenderesse
             stmtExistePartie.setInt(1, idPartieDefenderesse);
-            rsetCreerProces = stmtExisteJuge.executeQuery();
+            rsetCreerProces = stmtExistePartie.executeQuery();
 
             if (!rsetCreerProces.next())
             {
@@ -839,7 +839,7 @@ public class Devoir3
             // Verification que l'id des parties sont correctes -
             // PartiePoursuivante
             stmtExistePartie.setInt(1, idPartiePoursuivante);
-            rsetCreerProces = stmtExisteJuge.executeQuery();
+            rsetCreerProces = stmtExistePartie.executeQuery();
 
             if (!rsetCreerProces.next())
             {
