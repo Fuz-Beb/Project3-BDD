@@ -76,7 +76,7 @@ public class GestionJury
     {
         if (!proces.existe(idProces))
             throw new IFT287Exception("Proces n'existe pas : " + idProces);
-        if (!proces.devantJury())
+        if (!proces.devantJury(idProces))
             throw new IFT287Exception("Le proces " + idProces + "doit se tenir devant un juge seul");
         jury.assignerProces(idProces, nas);
     }
