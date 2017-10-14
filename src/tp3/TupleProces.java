@@ -1,5 +1,5 @@
 /**
- * 
+ * Permet de représenter un tuple de la table proces.
  */
 package tp3;
 
