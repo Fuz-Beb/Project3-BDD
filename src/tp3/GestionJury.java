@@ -15,10 +15,17 @@ public class GestionJury
      * Constructeur de confort
      * 
      * @param jury
+     * @param proces
+     * @throws IFT287Exception
      */
-    public GestionJury(TableJury jury, TableProces proces)
+    public GestionJury(TableJury jury, TableProces proces) throws IFT287Exception
     {
         this.cx = jury.getConnexion();
+
+        if (jury.getConnexion() != proces.getConnexion())
+            throw new IFT287Exception(
+                    "Les instances de juge et de proces n'utilisent pas la même connexion au serveur");
+
         this.jury = jury;
         this.proces = proces;
     }
