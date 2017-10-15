@@ -17,3 +17,21 @@ DROP TABLE IF EXISTS "Proces" CASCADE;
 
 -- Suppression de la table Seance
 DROP TABLE IF EXISTS "Seance" CASCADE;
+
+-- Sequence: "Avocat_id_sequence"
+DROP SEQUENCE IF EXISTS "Avocat_id_sequence";
+
+-- Sequence: "Juge_id_sequence"
+DROP SEQUENCE IF EXISTS "Juge_id_sequence";
+
+-- Sequence: "Jury_nas_sequence"
+DROP SEQUENCE IF EXISTS "Jury_nas_sequence";
+
+-- Sequence: "Partie_id_sequence"
+DROP SEQUENCE IF EXISTS "Partie_id_sequence";
+
+-- Sequence: "Proces_id_sequence"
+DROP SEQUENCE IF EXISTS "Proces_id_sequence";
+
+-- Sequence: "Seance_id_sequence"
+DROP SEQUENCE IF EXISTS "Seance_id_sequence";
