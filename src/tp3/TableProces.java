@@ -96,7 +96,7 @@ public class TableProces
         {
             do
             {
-                result += rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
+                result += "\n" + rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
                         + "\t" + rset.getInt(5) + "\t" + rset.getInt(6) + "\t"
                         + (rset.getObject(7) != null ? rset.getInt(7) : "non termine");
             }
@@ -177,6 +177,8 @@ public class TableProces
         {
             return true;
         }
+        
+        rset.close();
 
         return false;
     }

@@ -83,6 +83,8 @@ public class GestionProces
     {
         try
         {
+            int idJuge = 0;
+            
             // Verification de la valeur de la decision
             if (decisionProces != 0 && decisionProces != 1)
                 throw new IFT287Exception(
@@ -97,10 +99,11 @@ public class GestionProces
                 throw new IFT287Exception("Le proces " + id + "n'a pas atteint sa date initiale.");
 
             proces.terminer(decisionProces, id);
-            proces.changeJugeStatut(id);
-
-            if (proces.jugeEnCours(id))
-                juge.changerDisponibilite(true, id);
+            
+            idJuge = proces.changeJugeStatut(id);
+            
+            if (!proces.jugeEnCours(idJuge))
+                juge.changerDisponibilite(true, idJuge);
 
             seance.supprimerSeancesProcesTermine(id);
 
