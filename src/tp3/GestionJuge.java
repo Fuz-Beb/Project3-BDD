@@ -1,11 +1,6 @@
-package Gestion;
+package tp3;
 
 import java.sql.SQLException;
-
-import Table.TableJuge;
-import Table.TableProces;
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * Gestion des transaction de la table juge.

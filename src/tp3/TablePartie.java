@@ -1,13 +1,11 @@
 /**
  * 
  */
-package Table;
+package tp3;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
 
 /**
  * @author Bebo

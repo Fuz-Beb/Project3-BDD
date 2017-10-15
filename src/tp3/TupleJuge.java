@@ -1,4 +1,4 @@
-package Tuple;
+package tp3;
 
 /**
  * Permet de représenter un tuple de la table juge.

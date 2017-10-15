@@ -1,14 +1,9 @@
 /**
  * 
  */
-package Gestion;
+package tp3;
 
 import java.sql.SQLException;
-
-import Table.TableAvocat;
-import Table.TablePartie;
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * @author Bebo

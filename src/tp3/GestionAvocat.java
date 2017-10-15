@@ -1,8 +1,4 @@
-package Gestion;
-
-import Table.TableAvocat;
-import tp3.Connexion;
-import tp3.IFT287Exception;
+package tp3;
 
 /**
  * Gestion des transactions de la table avocat.

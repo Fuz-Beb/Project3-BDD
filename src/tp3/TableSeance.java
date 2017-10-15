@@ -1,15 +1,12 @@
 /**
  * 
  */
-package Table;
+package tp3;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * @author Bebo

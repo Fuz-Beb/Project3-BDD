@@ -1,16 +1,9 @@
 /**
  * 
  */
-package Gestion;
+package tp3;
 
 import java.sql.Date;
-
-import Table.TableJuge;
-import Table.TablePartie;
-import Table.TableProces;
-import Table.TableSeance;
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * @author Bebo
