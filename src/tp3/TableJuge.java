@@ -101,7 +101,7 @@ public class TableJuge
         stmtInsert.setString(2, prenom);
         stmtInsert.setString(3, nom);
         stmtInsert.setInt(4, age);
-        stmtInsert.executeQuery();
+        stmtInsert.executeUpdate();
     }
 
     /**
@@ -127,6 +127,6 @@ public class TableJuge
     {
         stmtChangeDisponibilite.setBoolean(1, disponibilite);
         stmtChangeDisponibilite.setInt(2, idJuge);
-        stmtChangeDisponibilite.executeQuery();
+        stmtChangeDisponibilite.executeUpdate();
     }
 }

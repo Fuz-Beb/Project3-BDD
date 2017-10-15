@@ -38,7 +38,7 @@ public class GestionJury
      * @param age
      * @throws Exception
      */
-    public void ajouter(int nas, String prenom, String nom, char sexe, int age) throws Exception
+    public void ajouter(int nas, String prenom, String nom, String sexe, int age) throws Exception
     {
         try
         {
@@ -78,7 +78,7 @@ public class GestionJury
      * @param nas
      * @throws Exception
      */
-    public void assignerProces(int idProces, int nas) throws Exception
+    public void assignerProces(int nas, int idProces) throws Exception
     {
         try
         {
@@ -86,7 +86,7 @@ public class GestionJury
                 throw new IFT287Exception("Proces n'existe pas : " + idProces);
             if (!proces.devantJury(idProces))
                 throw new IFT287Exception("Le proces " + idProces + "doit se tenir devant un juge seul");
-            jury.assignerProces(idProces, nas);
+            jury.assignerProces(nas, idProces);
         }
         catch (Exception e)
         {

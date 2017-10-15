@@ -95,14 +95,14 @@ public class TableJury
      * @param age
      * @throws SQLException
      */
-    public void ajouter(int nas, String prenom, String nom, char sexe, int age) throws SQLException
+    public void ajouter(int nas, String prenom, String nom, String sexe, int age) throws SQLException
     {
         stmtInsert.setInt(1, nas);
         stmtInsert.setString(2, prenom);
         stmtInsert.setString(3, nom);
         stmtInsert.setObject(4, sexe);
         stmtInsert.setInt(5, age);
-        stmtInsert.executeQuery();
+        stmtInsert.executeUpdate();
     }
 
     /**
@@ -112,10 +112,10 @@ public class TableJury
      * @param nas
      * @throws SQLException
      */
-    public void assignerProces(int idProces, int nas) throws SQLException
+    public void assignerProces(int nas, int idProces) throws SQLException
     {
         stmtInsertProcesDansJury.setInt(1, idProces);
         stmtInsertProcesDansJury.setInt(2, nas);
-        stmtInsertProcesDansJury.executeQuery();
+        stmtInsertProcesDansJury.executeUpdate();
     }
 }

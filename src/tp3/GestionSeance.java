@@ -4,6 +4,7 @@
 package tp3;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 /**
  * @author Bebo
@@ -20,10 +21,10 @@ public class GestionSeance
      * 
      * @param cx
      * @param seance
-     * @param proces 
+     * @param proces
      * @throws IFT287Exception
      */
-    public GestionSeance(Connexion cx, TableSeance seance, TableProces proces) throws IFT287Exception
+    public GestionSeance(TableSeance seance, TableProces proces) throws IFT287Exception
     {
         this.cx = seance.getConnexion();
         if (seance.getConnexion() != proces.getConnexion())
@@ -59,6 +60,35 @@ public class GestionSeance
                 throw new IFT287Exception("Le proces " + idProces + " est termine.");
 
             seance.ajout(idSeance, idProces, dateSeance);
+
+            cx.commit();
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Supprimer une seance
+     * 
+     * @param idSeance
+     * @throws Exception
+     */
+    public void supprimer(int idSeance) throws Exception
+    {
+        try
+        {
+            // Vérification si la seance existe
+            if (!seance.existe(idSeance))
+                throw new IFT287Exception("La seance n'existe pas : " + idSeance);
+
+            // Vérification que la seance n'est pas encore passée
+            if (seance.seancePassee(idSeance))
+                throw new IFT287Exception("La seance " + idSeance + " est déjà passée.");
+
+            seance.supprimer(idSeance);
 
             cx.commit();
         }

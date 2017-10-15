@@ -82,20 +82,29 @@ public class TableProces
      * Affichage des elements de proces
      * 
      * @param id
+     * @return
      * @throws SQLException
      */
-    public void affichage(int id) throws SQLException
+    public String affichage(int id) throws SQLException
     {
+        String result = "\n\nAffichage du proces " + id + " :";
+
         stmtExisteProces.setInt(1, id);
         ResultSet rset = stmtExisteProces.executeQuery();
 
-        System.out.println("\n\nAffichage du proces " + id + " :");
-
-        System.out.println(rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
-                + "\t" + rset.getInt(5) + "\t" + rset.getInt(6) + "\t"
-                + (rset.getObject(7) != null ? rset.getInt(7) : "non termine"));
+        if (rset.next())
+        {
+            do
+            {
+                result += rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
+                        + "\t" + rset.getInt(5) + "\t" + rset.getInt(6) + "\t"
+                        + (rset.getObject(7) != null ? rset.getInt(7) : "non termine");
+            }
+            while (rset.next());
+        }
 
         rset.close();
+        return result;
     }
 
     /**
@@ -164,7 +173,7 @@ public class TableProces
         stmtProcesJugeEnCours.setInt(1, id);
         ResultSet rset = stmtProcesJugeEnCours.executeQuery();
 
-        if (!rset.next())
+        if (rset.next())
         {
             return true;
         }

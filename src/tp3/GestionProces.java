@@ -27,7 +27,7 @@ public class GestionProces
      * @param partie
      * @throws IFT287Exception
      */
-    public GestionProces(Connexion cx, TableProces proces, TableSeance seance, TableJuge juge, TablePartie partie)
+    public GestionProces(TableProces proces, TableSeance seance, TableJuge juge, TablePartie partie)
             throws IFT287Exception
     {
         this.cx = proces.getConnexion();
@@ -53,15 +53,15 @@ public class GestionProces
      * @param id
      * @throws Exception
      */
-    public void afficher(int id) throws Exception
+    public void affichage(int id) throws Exception
     {
         try
         {
             if (!proces.existe(id))
                 throw new IFT287Exception("Le proces " + id + "n'existe pas");
 
-            proces.affichage(id);
-            seance.affichage(id);
+            System.out.println(proces.affichage(id));
+            System.out.println(seance.affichage(id));
 
             cx.commit();
         }

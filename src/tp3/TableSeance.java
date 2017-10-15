@@ -51,19 +51,20 @@ public class TableSeance
      * @param id
      * @throws SQLException
      */
-    public void affichage(int id) throws SQLException
+    public String affichage(int id) throws SQLException
     {
+        String result = "";
         stmtExisteProcesDansSeance.setInt(1, id);
         ResultSet rset = stmtExisteProcesDansSeance.executeQuery();
 
         if (rset.next())
         {
-            System.out.println("\nListe des seances liees au proces " + id + " :");
+            result += "\nListe des seances liees au proces " + id + " :";
 
             // Affichage des seances liees au proces
             do
             {
-                System.out.println(rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3));
+                result += rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3);
             }
             while (rset.next());
 
@@ -71,10 +72,11 @@ public class TableSeance
         }
         else
         {
-            System.out.println("Aucune seance n'est liee au proces " + id);
+            result += "Aucune seance n'est liee au proces " + id;
             rset.close();
         }
         rset.close();
+        return result;
     }
 
     /**
@@ -111,11 +113,12 @@ public class TableSeance
     /**
      * Methode de traitement pour effectuerSupprimerSeance
      * 
-     * @param int1
+     * @param id
+     * 
      * @throws IFT287Exception
      * @throws SQLException
      */
-    private void supprimer(int id) throws IFT287Exception, SQLException
+    public void supprimer(int id) throws IFT287Exception, SQLException
     {
         if (!existe(id))
             throw new IFT287Exception("La seance: " + id + " n'existe pas.");
@@ -150,7 +153,7 @@ public class TableSeance
      * @return boolean
      * @throws SQLException
      */
-    private boolean seancePassee(int id) throws SQLException
+    public boolean seancePassee(int id) throws SQLException
     {
         stmtSeanceNonTerminee.setInt(1, id);
         ResultSet rset = stmtSeanceNonTerminee.executeQuery();

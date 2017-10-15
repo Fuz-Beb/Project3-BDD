@@ -69,6 +69,6 @@ public class TableAvocat
         stmtInsert.setString(2, prenom);
         stmtInsert.setString(3, nom);
         stmtInsert.setInt(4, type);
-        stmtInsert.executeQuery();
+        stmtInsert.executeUpdate();
     }
 }

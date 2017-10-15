@@ -83,7 +83,7 @@ public class GestionJuge
     {
         try
         {
-            if (juge.existe(idJuge))
+            if (!juge.existe(idJuge))
                 throw new IFT287Exception("Juge inexistant : " + idJuge);
             if (proces.jugeEnCours(idJuge))
                 throw new IFT287Exception("Le juge " + idJuge + " n'a pas terminé tout ses procès");

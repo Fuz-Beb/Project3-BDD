@@ -23,7 +23,7 @@ public class GestionPartie
      * @param avocat
      * @throws IFT287Exception
      */
-    public GestionPartie(Connexion cx, TablePartie partie, TableAvocat avocat) throws IFT287Exception
+    public GestionPartie(TablePartie partie, TableAvocat avocat) throws IFT287Exception
     {
         this.cx = partie.getConnexion();
         if (partie.getConnexion() != avocat.getConnexion())
