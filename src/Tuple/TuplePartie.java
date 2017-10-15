@@ -1,19 +1,23 @@
-package tp3;
+/**
+ * Permet de représenter un tuple de la table partie.
+ */
+package Tuple;
 
 /**
- * Permet de représenter un tuple de la table avocat.
+ * @author Bebo
+ *
  */
-public class TupleAvocat
+public class TuplePartie
 {
     private int id;
     private String prenom;
     private String nom;
-    private int type;
+    private int avocat_id;
 
     /**
      * Constructeur par défaut
      */
-    public TupleAvocat()
+    public TuplePartie()
     {
     }
 
@@ -23,15 +27,14 @@ public class TupleAvocat
      * @param id
      * @param prenom
      * @param nom
-     * @param type
+     * @param avocat_id
      */
-    public TupleAvocat(int id, String prenom, String nom, int type)
+    public TuplePartie(int id, String prenom, String nom, int avocat_id)
     {
-        super();
         this.id = id;
         this.prenom = prenom;
         this.nom = nom;
-        this.type = type;
+        this.avocat_id = avocat_id;
     }
 
     /**
@@ -86,19 +89,19 @@ public class TupleAvocat
     }
 
     /**
-     * @return the type
+     * @return the avocat_id
      */
-    public int getType()
+    public int getAvocat_id()
     {
-        return type;
+        return avocat_id;
     }
 
     /**
-     * @param type
-     *            the type to set
+     * @param avocat_id
+     *            the avocat_id to set
      */
-    public void setType(int type)
+    public void setAvocat_id(int avocat_id)
     {
-        this.type = type;
+        this.avocat_id = avocat_id;
     }
 }

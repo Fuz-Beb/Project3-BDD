@@ -1,4 +1,9 @@
-package tp3;
+package Gestion;
+
+import Table.TableJury;
+import Table.TableProces;
+import tp3.Connexion;
+import tp3.IFT287Exception;
 
 /**
  * Gestion des transactions de la table jury.

@@ -1,4 +1,4 @@
-package tp3;
+package Tuple;
 
 /**
  * Permet de représenter un tuple de la table jury.

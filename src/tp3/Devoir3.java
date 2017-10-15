@@ -6,6 +6,9 @@ package tp3;
 
 import java.io.*;
 import java.util.StringTokenizer;
+
+import Gestion.GestionJustice;
+
 import java.sql.*;
 
 /**
