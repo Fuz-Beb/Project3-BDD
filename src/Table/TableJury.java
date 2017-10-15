@@ -79,7 +79,7 @@ public class TableJury
             {
                 result += rset.getInt(1) + "\t" + rset.getString(2) + "\t" + rset.getString(3) + "\t"
                         + rset.getString(4) + "\t" + rset.getInt(5) + "\t"
-                        + (rset.getObject(6) != null ? rset.getInt(6) : "nul");
+                        + (rset.getObject(6) != null ? rset.getInt(6) : "nul" + "\n");
             }
             while (rset.next());
         }
