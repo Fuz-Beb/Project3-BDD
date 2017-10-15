@@ -18,7 +18,6 @@ public class GestionPartie
     /**
      * Constructeur de confort
      * 
-     * @param cx
      * @param partie
      * @param avocat
      * @throws IFT287Exception

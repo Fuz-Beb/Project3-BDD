@@ -82,7 +82,7 @@ public class TableProces
      * Affichage des elements de proces
      * 
      * @param id
-     * @return
+     * @return String
      * @throws SQLException
      */
     public String affichage(int id) throws SQLException

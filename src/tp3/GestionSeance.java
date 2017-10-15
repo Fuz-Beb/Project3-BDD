@@ -4,7 +4,6 @@
 package tp3;
 
 import java.sql.Date;
-import java.sql.SQLException;
 
 /**
  * @author Bebo
@@ -19,7 +18,6 @@ public class GestionSeance
     /**
      * Constructeur de confort
      * 
-     * @param cx
      * @param seance
      * @param proces
      * @throws IFT287Exception

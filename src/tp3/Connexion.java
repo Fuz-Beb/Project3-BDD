@@ -3,10 +3,12 @@ package tp3;
 import java.sql.*;
 
 /**
- * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.<br><br>
+ * Gestionnaire d'une connexion avec une BD relationnelle via JDBC.<br>
+ * <br>
  * 
  * Cette classe ouvre une connexion avec une BD via JDBC.<br>
  * La méthode serveursSupportes() indique les serveurs supportés.<br>
+ * 
  * <pre>
  * Pré-condition
  *   Le driver JDBC approprié doit être accessible.
@@ -15,6 +17,7 @@ import java.sql.*;
  *   La connexion est ouverte en mode autocommit false et sérialisable, 
  *   (s'il est supporté par le serveur).
  * </pre>
+ * 
  * <br>
  * IFT287 - Exploitation de BD relationnelles et OO
  * 
@@ -33,27 +36,34 @@ public class Connexion
      * Ouverture d'une connexion en mode autocommit false et sérialisable (si
      * supporté)
      * 
-     * @param serveur Le type de serveur SQL à utiliser (Valeur : local, dinf).
-     * @param bd      Le nom de la base de données sur le serveur.
-     * @param user    Le nom d'utilisateur à utiliser pour se connecter à la base de données.
-     * @param pass    Le mot de passe associé à l'utilisateur.
+     * @param serveur
+     *            Le type de serveur SQL à utiliser (Valeur : local, dinf).
+     * @param bd
+     *            Le nom de la base de données sur le serveur.
+     * @param user
+     *            Le nom d'utilisateur à utiliser pour se connecter à la base de
+     *            données.
+     * @param pass
+     *            Le mot de passe associé à l'utilisateur.
+     * @throws IFT287Exception
+     * @throws SQLException
      */
-    public Connexion(String serveur, String bd, String user, String pass)
-            throws IFT287Exception, SQLException
+    public Connexion(String serveur, String bd, String user, String pass) throws IFT287Exception, SQLException
     {
         Driver d;
         try
         {
-            d = (Driver)Class.forName("org.postgresql.Driver").newInstance();
+            d = (Driver) Class.forName("org.postgresql.Driver").newInstance();
             DriverManager.registerDriver(d);
-            
+
             if (serveur.equals("local"))
             {
                 conn = DriverManager.getConnection("jdbc:postgresql:" + bd, user, pass);
             }
             else if (serveur.equals("dinf"))
             {
-                conn = DriverManager.getConnection("jdbc:postgresql://hibou.dinf.fsci.usherbrooke.ca:5432/" + bd, user, pass);
+                conn = DriverManager.getConnection("jdbc:postgresql://hibou.dinf.fsci.usherbrooke.ca:5432/" + bd, user,
+                        pass);
             }
             else
             {
@@ -64,20 +74,19 @@ public class Connexion
             conn.setAutoCommit(false);
 
             // Mise en mode sérialisable, si possible
-            // (plus haut niveau d'integrité pour l'accès concurrent aux données)
+            // (plus haut niveau d'integrité pour l'accès concurrent aux
+            // données)
             DatabaseMetaData dbmd = conn.getMetaData();
             if (dbmd.supportsTransactionIsolationLevel(Connection.TRANSACTION_SERIALIZABLE))
             {
                 conn.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
                 System.out.println("Ouverture de la connexion en mode sérialisable :\n"
-                        + "Connecté sur la BD postgreSQL "
-                        + bd + " avec l'utilisateur " + user);
+                        + "Connecté sur la BD postgreSQL " + bd + " avec l'utilisateur " + user);
             }
             else
             {
                 System.out.println("Ouverture de la connexion en mode read committed (default) :\n"
-                        + "Connecté sur la BD postgreSQL "
-                        + bd + " avec l'utilisateur " + user);
+                        + "Connecté sur la BD postgreSQL " + bd + " avec l'utilisateur " + user);
             }
         }
         catch (SQLException e)
@@ -93,6 +102,8 @@ public class Connexion
 
     /**
      * Fermeture d'une connexion
+     * 
+     * @throws SQLException
      */
     public void fermer() throws SQLException
     {
@@ -103,12 +114,17 @@ public class Connexion
 
     /**
      * Commit
+     * 
+     * @throws SQLException
      */
     public void commit() throws SQLException
     {
         conn.commit();
     }
 
+    /**
+     * @throws SQLException
+     */
     public void setIsolationReadCommited() throws SQLException
     {
         conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
@@ -116,6 +132,8 @@ public class Connexion
 
     /**
      * Rollback
+     * 
+     * @throws SQLException
      */
     public void rollback() throws SQLException
     {
@@ -124,12 +142,18 @@ public class Connexion
 
     /**
      * Retourne la Connection JDBC
+     * 
+     * @return Connection
      */
     public Connection getConnection()
     {
         return conn;
     }
 
+    /**
+     * @param m
+     * @throws SQLException
+     */
     public void setAutoCommit(boolean m) throws SQLException
     {
         conn.setAutoCommit(false);
@@ -138,10 +162,12 @@ public class Connexion
     /**
      * Retourne la liste des serveurs supportés par ce gestionnaire de
      * connexions
+     * 
+     * @return String
      */
     public static String serveursSupportes()
     {
         return "local : PostgreSQL installé localement\n"
-             + "dinf  : PostgreSQL installé sur les serveurs du département\n";
+                + "dinf  : PostgreSQL installé sur les serveurs du département\n";
     }
 }

@@ -49,6 +49,7 @@ public class TableSeance
      * Affichage des seances lie a un proces
      * 
      * @param id
+     * @return String
      * @throws SQLException
      */
     public String affichage(int id) throws SQLException

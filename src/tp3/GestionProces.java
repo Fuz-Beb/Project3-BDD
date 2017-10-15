@@ -20,7 +20,6 @@ public class GestionProces
     /**
      * Constructeur de confort
      * 
-     * @param cx
      * @param proces
      * @param seance
      * @param juge
