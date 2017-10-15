@@ -1,8 +1,10 @@
-package tp3;
+package Table;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import tp3.Connexion;
 
 /**
  * Permet d'effectuer les accès à la table avocat.

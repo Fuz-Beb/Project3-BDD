@@ -1,7 +1,7 @@
 /**
  * Permet de représenter un tuple de la table seance.
  */
-package tp3;
+package Tuple;
 
 import java.sql.Date;
 

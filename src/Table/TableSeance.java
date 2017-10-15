@@ -1,12 +1,15 @@
 /**
  * 
  */
-package tp3;
+package Table;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import tp3.Connexion;
+import tp3.IFT287Exception;
 
 /**
  * @author Bebo
@@ -49,6 +52,7 @@ public class TableSeance
      * Affichage des seances lie a un proces
      * 
      * @param id
+     * @return String
      * @throws SQLException
      */
     public String affichage(int id) throws SQLException

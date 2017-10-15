@@ -1,10 +1,14 @@
 /**
  * 
  */
-package tp3;
+package Gestion;
 
 import java.sql.Date;
-import java.sql.SQLException;
+
+import Table.TableProces;
+import Table.TableSeance;
+import tp3.Connexion;
+import tp3.IFT287Exception;
 
 /**
  * @author Bebo
@@ -19,7 +23,6 @@ public class GestionSeance
     /**
      * Constructeur de confort
      * 
-     * @param cx
      * @param seance
      * @param proces
      * @throws IFT287Exception

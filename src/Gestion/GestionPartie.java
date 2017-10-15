@@ -1,9 +1,14 @@
 /**
  * 
  */
-package tp3;
+package Gestion;
 
 import java.sql.SQLException;
+
+import Table.TableAvocat;
+import Table.TablePartie;
+import tp3.Connexion;
+import tp3.IFT287Exception;
 
 /**
  * @author Bebo
@@ -18,7 +23,6 @@ public class GestionPartie
     /**
      * Constructeur de confort
      * 
-     * @param cx
      * @param partie
      * @param avocat
      * @throws IFT287Exception
