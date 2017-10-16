@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.StringTokenizer;
 
 import Gestion.GestionJustice;
+import Tuple.TupleJuge;
 
 import java.sql.*;
 
@@ -124,6 +125,7 @@ public class Devoir3
                 // commande "quitter".
                 if (command.equals("ajouterJuge"))
                 {
+                    TupleJuge juge = new TupleJuge(readInt(tokenizer), readString(tokenizer), readString(tokenizer), readInt(tokenizer));
                     // Lecture des parametres
                     int idJuge = readInt(tokenizer);
                     String prenomJuge = readString(tokenizer);
