@@ -1,15 +1,6 @@
-package Gestion;
+package tp3;
 
 import java.sql.SQLException;
-
-import Table.TableAvocat;
-import Table.TableJuge;
-import Table.TableJury;
-import Table.TablePartie;
-import Table.TableProces;
-import Table.TableSeance;
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * Système de gestion d'un palais de justice

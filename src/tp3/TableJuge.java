@@ -1,10 +1,9 @@
-package Table;
+package tp3;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
+import java.util.ArrayList;
 
 /**
  * Permet d'effectuer les accès à la table juge.
@@ -49,6 +48,28 @@ public class TableJuge
     }
 
     /**
+     * Objet juge associé à un juge de la base de données
+     * 
+     * @param id
+     * @return TupleJuge
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public TupleJuge getJuge(int id) throws SQLException, IFT287Exception
+    {
+        TupleJuge tupleJuge = null;
+
+        stmtExiste.setInt(1, id);
+        ResultSet rset = stmtExiste.executeQuery();
+
+        if (rset.next())
+            tupleJuge = new TupleJuge(id, rset.getString(2), rset.getString(3), rset.getInt(4));
+
+        rset.close();
+        return tupleJuge;
+    }
+
+    /**
      * Vérifie si le juge existe
      * 
      * @param idJuge
@@ -69,52 +90,52 @@ public class TableJuge
      * 
      * @return String
      * @throws SQLException
+     * @throws IFT287Exception
      */
-    public String affichage() throws SQLException
+    public ArrayList<TupleJuge> affichage() throws SQLException, IFT287Exception
     {
-        String result = "\nListe des juges actifs et disponibles :\n";
+        ArrayList<TupleJuge> listJuge = new ArrayList<TupleJuge>();
+
         ResultSet rset = stmtSelect.executeQuery();
 
         if (rset.next())
         {
             do
             {
-                result += rset.getInt(1) + "\t" + rset.getString(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
-                        + "\t" + rset.getBoolean(5) + "\t" + rset.getBoolean(6) + "\n";
+                // Ajout de chacun des juges dans la liste
+                listJuge.add(getJuge(rset.getInt(1)));
             }
             while (rset.next());
         }
         rset.close();
-        return result;
+        return listJuge;
     }
 
     /**
      * Ajout d'un nouveau juge dans la base de données
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param age
+     * @param tupleJuge
      * @throws SQLException
      */
-    public void ajouter(int id, String prenom, String nom, int age) throws SQLException
+    public void ajouter(TupleJuge tupleJuge) throws SQLException
     {
-        stmtInsert.setInt(1, id);
-        stmtInsert.setString(2, prenom);
-        stmtInsert.setString(3, nom);
-        stmtInsert.setInt(4, age);
+        stmtInsert.setInt(1, tupleJuge.getId());
+        stmtInsert.setString(2, tupleJuge.getPrenom());
+        stmtInsert.setString(3, tupleJuge.getNom());
+        stmtInsert.setInt(4, tupleJuge.getAge());
         stmtInsert.executeUpdate();
     }
 
     /**
      * Retirer le juge de la base de données
      * 
-     * @param idJuge
+     * @param tupleJuge
+     * 
      * @throws SQLException
      */
-    public void retirer(int idJuge) throws SQLException
+    public void retirer(TupleJuge tupleJuge) throws SQLException
     {
-        stmtRetirer.setInt(1, idJuge);
+        stmtRetirer.setInt(1, tupleJuge.getId());
         stmtRetirer.executeUpdate();
     }
 

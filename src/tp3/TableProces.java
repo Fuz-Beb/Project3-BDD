@@ -1,14 +1,11 @@
 /**
  * 
  */
-package Table;
+package tp3;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
 
 /**
  * @author Bebo
@@ -65,6 +62,33 @@ public class TableProces
     }
 
     /**
+     * Objet proces associé à un proces de la base de données
+     * 
+     * @param id
+     * @return TupleJuge
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public TupleProces getProces(int id) throws SQLException, IFT287Exception
+    {
+        TupleProces tupleProces = null;
+
+        stmtExisteProces.setInt(1, id);
+        ResultSet rset = stmtExisteProces.executeQuery();
+
+        if (rset.next())
+            tupleProces = new TupleProces(id, rset.getInt(2), rset.getDate(3), rset.getInt(4), rset.getInt(5),
+                    rset.getInt(6));
+
+        // Si la decision a été prise
+        if (rset.getObject(7) != null)
+            tupleProces.setDecision(rset.getInt(7));
+
+        rset.close();
+        return tupleProces;
+    }
+
+    /**
      * Verification de l'existance d'un proces
      * 
      * @param id
@@ -83,30 +107,25 @@ public class TableProces
     /**
      * Affichage des elements de proces
      * 
-     * @param id
+     * @param tupleProces
      * @return String
      * @throws SQLException
+     * @throws IFT287Exception
      */
-    public String affichage(int id) throws SQLException
+    public TupleProces affichage(TupleProces tupleProces) throws SQLException, IFT287Exception
     {
-        String result = "\n\nAffichage du proces " + id + " :";
+        TupleProces tupleProcesReturn = null;
 
-        stmtExisteProces.setInt(1, id);
+        stmtExisteProces.setInt(1, tupleProces.getId());
         ResultSet rset = stmtExisteProces.executeQuery();
 
         if (rset.next())
         {
-            do
-            {
-                result += "\n" + rset.getInt(1) + "\t" + rset.getInt(2) + "\t" + rset.getString(3) + "\t" + rset.getInt(4)
-                        + "\t" + rset.getInt(5) + "\t" + rset.getInt(6) + "\t"
-                        + (rset.getObject(7) != null ? rset.getInt(7) : "non termine");
-            }
-            while (rset.next());
+            tupleProcesReturn = getProces(rset.getInt(1));
         }
 
         rset.close();
-        return result;
+        return tupleProcesReturn;
     }
 
     /**
@@ -129,13 +148,13 @@ public class TableProces
      * Terminer le proces
      * 
      * @param decisionProces
-     * @param id
+     * @param tupleProces
      * @throws SQLException
      */
-    public void terminer(int decisionProces, int id) throws SQLException
+    public void terminer(int decisionProces, TupleProces tupleProces) throws SQLException
     {
         stmtTerminerProces.setInt(1, decisionProces);
-        stmtTerminerProces.setInt(2, id);
+        stmtTerminerProces.setInt(2, tupleProces.getId());
         stmtTerminerProces.executeUpdate();
     }
 
@@ -179,7 +198,7 @@ public class TableProces
         {
             return true;
         }
-        
+
         rset.close();
 
         return false;
@@ -188,23 +207,17 @@ public class TableProces
     /**
      * Ajout du proces
      * 
-     * @param idProces
-     * @param idJuge
-     * @param dateInitiale
-     * @param devantJury
-     * @param idPartieDefenderesse
-     * @param idPartiePoursuivante
+     * @param tupleProces
      * @throws SQLException
      */
-    public void creer(int idProces, int idJuge, Date dateInitiale, int devantJury, int idPartieDefenderesse,
-            int idPartiePoursuivante) throws SQLException
+    public void creer(TupleProces tupleProces) throws SQLException
     {
-        stmtInsertProces.setInt(1, idProces);
-        stmtInsertProces.setInt(2, idJuge);
-        stmtInsertProces.setDate(3, dateInitiale);
-        stmtInsertProces.setInt(4, devantJury);
-        stmtInsertProces.setInt(5, idPartieDefenderesse);
-        stmtInsertProces.setInt(6, idPartiePoursuivante);
+        stmtInsertProces.setInt(1, tupleProces.getId());
+        stmtInsertProces.setInt(2, tupleProces.getJuge_id());
+        stmtInsertProces.setDate(3, tupleProces.getDate());
+        stmtInsertProces.setInt(4, tupleProces.getDevantJury());
+        stmtInsertProces.setInt(5, tupleProces.getPartieDefenderesse_id());
+        stmtInsertProces.setInt(6, tupleProces.getPartiePoursuivant_id());
         stmtInsertProces.executeUpdate();
     }
 

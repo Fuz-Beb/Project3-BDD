@@ -1,7 +1,7 @@
 /**
  * Permet de représenter un tuple de la table proces.
  */
-package Tuple;
+package tp3;
 
 import java.sql.Date;
 
@@ -30,23 +30,31 @@ public class TupleProces
      * Constructeur de confort
      * 
      * @param id
+     */
+    public TupleProces(int id)
+    {
+        this.id = id;
+    }
+
+    /**
+     * Constructeur de confort
+     * 
+     * @param id
      * @param juge_id
      * @param date
      * @param devantJury
      * @param partieDefenderesse_id
      * @param partiePoursuivant_id
-     * @param decision
      */
     public TupleProces(int id, int juge_id, Date date, int devantJury, int partieDefenderesse_id,
-            int partiePoursuivant_id, int decision)
+            int partiePoursuivant_id)
     {
-        this.id = id;
+        this(id);
         this.juge_id = juge_id;
         this.date = date;
         this.devantJury = devantJury;
         this.partieDefenderesse_id = partieDefenderesse_id;
         this.partiePoursuivant_id = partiePoursuivant_id;
-        this.decision = decision;
     }
 
     /**

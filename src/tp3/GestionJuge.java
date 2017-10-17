@@ -1,11 +1,7 @@
-package Gestion;
+package tp3;
 
 import java.sql.SQLException;
-
-import Table.TableJuge;
-import Table.TableProces;
-import tp3.Connexion;
-import tp3.IFT287Exception;
+import java.util.ArrayList;
 
 /**
  * Gestion des transaction de la table juge.
@@ -38,20 +34,18 @@ public class GestionJuge
     /**
      * Ajout d'un nouveau juge dans la base de données
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param age
+     * @param tupleJuge
+     * 
      * @throws Exception
      */
-    public void ajouter(int id, String prenom, String nom, int age) throws Exception
+    public void ajouter(TupleJuge tupleJuge) throws Exception
     {
         try
         {
-            if (juge.existe(id))
-                throw new IFT287Exception("Le juge existe déjà : " + id);
+            if (juge.existe(tupleJuge.getId()))
+                throw new IFT287Exception("Le juge existe déjà : " + tupleJuge.getId());
 
-            juge.ajouter(id, prenom, nom, age);
+            juge.ajouter(tupleJuge);
         }
         catch (Exception e)
         {
@@ -63,13 +57,14 @@ public class GestionJuge
     /**
      * Afficher la liste des juges actifs et disponibles
      * 
-     * @throws SQLException
+     * @return ArrayList<TupleJuge>
+     * @throws Exception
      */
-    public void affichage() throws SQLException
+    public ArrayList<TupleJuge> affichage() throws Exception
     {
         try
         {
-            System.out.println(juge.affichage());
+            return juge.affichage();
         }
         catch (Exception e)
         {
@@ -81,18 +76,18 @@ public class GestionJuge
     /**
      * Retirer un juge
      * 
-     * @param idJuge
+     * @param tupleJuge
      * @throws Exception
      */
-    public void retirer(int idJuge) throws Exception
+    public void retirer(TupleJuge tupleJuge) throws Exception
     {
         try
         {
-            if (!juge.existe(idJuge))
-                throw new IFT287Exception("Juge inexistant : " + idJuge);
-            if (proces.jugeEnCours(idJuge))
-                throw new IFT287Exception("Le juge " + idJuge + " n'a pas terminé tout ses procès");
-            juge.retirer(idJuge);
+            if (!juge.existe(tupleJuge.getId()))
+                throw new IFT287Exception("Juge inexistant : " + tupleJuge.getId());
+            if (proces.jugeEnCours(tupleJuge.getId()))
+                throw new IFT287Exception("Le juge " + tupleJuge.getId() + " n'a pas terminé tout ses procès");
+            juge.retirer(tupleJuge);
         }
         catch (Exception e)
         {

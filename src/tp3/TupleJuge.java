@@ -1,4 +1,4 @@
-package Tuple;
+package tp3;
 
 /**
  * Permet de représenter un tuple de la table juge.
@@ -23,21 +23,30 @@ public class TupleJuge
      * Constructeur de confort
      * 
      * @param id
+     */
+    public TupleJuge(int id)
+    {
+        this.id = id;
+    }
+
+    /**
+     * Constructeur de confort
+     * 
+     * @param id
      * @param prenom
      * @param nom
      * @param age
      * @param disponible
      * @param quitterJustice
      */
-    public TupleJuge(int id, String prenom, String nom, int age, boolean disponible, boolean quitterJustice)
+    public TupleJuge(int id, String prenom, String nom, int age)
     {
-        super();
-        this.id = id;
+        this(id);
         this.prenom = prenom;
         this.nom = nom;
         this.age = age;
-        this.disponible = disponible;
-        this.quitterJustice = quitterJustice;
+        this.disponible = true;
+        this.quitterJustice = false;
     }
 
     /**

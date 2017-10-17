@@ -1,7 +1,7 @@
 /**
  * Permet de représenter un tuple de la table seance.
  */
-package Tuple;
+package tp3;
 
 import java.sql.Date;
 
@@ -26,12 +26,22 @@ public class TupleSeance
      * Constructeur de confort
      * 
      * @param id
+     */
+    public TupleSeance(int id)
+    {
+        this.id = id;
+    }
+
+    /**
+     * Constructeur de confort
+     * 
+     * @param id
      * @param proces_id
      * @param date
      */
     public TupleSeance(int id, int proces_id, Date date)
     {
-        this.id = id;
+        this(id);
         this.proces_id = proces_id;
         this.date = date;
     }

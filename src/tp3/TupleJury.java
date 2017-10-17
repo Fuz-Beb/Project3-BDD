@@ -1,4 +1,4 @@
-package Tuple;
+package tp3;
 
 /**
  * Permet de représenter un tuple de la table jury.
@@ -8,7 +8,7 @@ public class TupleJury
     private int nas;
     private String prenom;
     private String nom;
-    private char sexe;
+    private String sexe;
     private int age;
     private int proces_id;
 
@@ -23,21 +23,28 @@ public class TupleJury
      * Constructeur de confort
      * 
      * @param nas
+     */
+    public TupleJury(int nas)
+    {
+        this.nas = nas;
+    }
+
+    /**
+     * Constructeur de confort
+     * 
+     * @param nas
      * @param prenom
      * @param nom
      * @param sexe
      * @param age
-     * @param proces_id
      */
-    public TupleJury(int nas, String prenom, String nom, char sexe, int age, int proces_id)
+    public TupleJury(int nas, String prenom, String nom, String sexe, int age)
     {
-        super();
-        this.nas = nas;
+        this(nas);
         this.prenom = prenom;
         this.nom = nom;
         this.sexe = sexe;
         this.age = age;
-        this.proces_id = proces_id;
     }
 
     /**
@@ -94,7 +101,7 @@ public class TupleJury
     /**
      * @return the sexe
      */
-    public char getSexe()
+    public String getSexe()
     {
         return sexe;
     }
@@ -103,7 +110,7 @@ public class TupleJury
      * @param sexe
      *            the sexe to set
      */
-    public void setSexe(char sexe)
+    public void setSexe(String sexe)
     {
         this.sexe = sexe;
     }

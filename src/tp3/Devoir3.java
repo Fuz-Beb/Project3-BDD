@@ -5,10 +5,8 @@
 package tp3;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
-
-import Gestion.GestionJustice;
-import Tuple.TupleJuge;
 
 import java.sql.*;
 
@@ -55,7 +53,7 @@ public class Devoir3
     public static void main(String[] args) throws Exception
     {
         Devoir3 instanceDevoir3 = null;
-        
+
         if (args.length < 4)
         {
             System.out.println("Usage: java tp2.Devoir2 <serveur> <bd> <user> <password> [<fichier-transactions>]");
@@ -111,6 +109,12 @@ public class Devoir3
      */
     static void executerTransaction(String transaction) throws Exception, IFT287Exception
     {
+        // Nécessaire pour l'affichage
+        ArrayList<TupleJuge> tupleJuge;
+        ArrayList<TupleJury> tupleJury;
+        ArrayList<TupleSeance> tupleSeance;
+        TupleProces tupleProces;
+
         try
         {
             System.out.println(transaction);
@@ -125,130 +129,110 @@ public class Devoir3
                 // commande "quitter".
                 if (command.equals("ajouterJuge"))
                 {
-                    TupleJuge juge = new TupleJuge(readInt(tokenizer), readString(tokenizer), readString(tokenizer), readInt(tokenizer));
-                    // Lecture des parametres
-                    int idJuge = readInt(tokenizer);
-                    String prenomJuge = readString(tokenizer);
-                    String nomJuge = readString(tokenizer);
-                    int ageJuge = readInt(tokenizer);
-
-                    // Exemple a supprimer quand on rend le projet
-                    // String param1 = readString(tokenizer);
-                    // Date param2 = readDate(tokenizer);
-                    // int param3 = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJuge().ajouter(idJuge, prenomJuge, nomJuge, ageJuge);
+                    gestionJustice.getGestionJuge().ajouter(new TupleJuge(readInt(tokenizer), readString(tokenizer),
+                            readString(tokenizer), readInt(tokenizer)));
                 }
                 else if (command.equals("retirerJuge"))
                 {
-                    // Lecture des parametres
-                    int idJuge = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJuge().retirer(idJuge);
+                    gestionJustice.getGestionJuge().retirer(new TupleJuge(readInt(tokenizer)));
                 }
                 else if (command.equals("ajouterAvocat"))
                 {
-                    // Lecture des parametres
-                    int idAvocat = readInt(tokenizer);
-                    String prenomAvocat = readString(tokenizer);
-                    String nomAvocat = readString(tokenizer);
-                    int typeAvocat = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionAvocat().ajouter(idAvocat, prenomAvocat, nomAvocat, typeAvocat);
+                    gestionJustice.getGestionAvocat().ajouter(new TupleAvocat(readInt(tokenizer), readString(tokenizer),
+                            readString(tokenizer), readInt(tokenizer)));
                 }
                 else if (command.equals("ajouterPartie"))
                 {
-                    // Lecture des parametres
-                    int idPartie = readInt(tokenizer);
-                    String prenomPartie = readString(tokenizer);
-                    String nomPartie = readString(tokenizer);
-                    int idAvocat = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionPartie().ajout(idPartie, prenomPartie, nomPartie, idAvocat);
+                    gestionJustice.getGestionPartie().ajout(new TuplePartie(readInt(tokenizer), readString(tokenizer),
+                            readString(tokenizer), readInt(tokenizer)));
                 }
                 else if (command.equals("creerProces"))
                 {
-                    // Lecture des parametres
-                    int idProces = readInt(tokenizer);
-                    int idJuge = readInt(tokenizer);
-                    Date dateInitiale = readDate(tokenizer);
-                    int devantJury = readInt(tokenizer);
-                    int idPartieDefenderesse = readInt(tokenizer);
-                    int idPartiePoursuivante = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionProces().creer(idProces, idJuge, dateInitiale, devantJury, idPartieDefenderesse,
-                            idPartiePoursuivante);
+                    gestionJustice.getGestionProces().creer(new TupleProces(readInt(tokenizer), readInt(tokenizer),
+                            readDate(tokenizer), readInt(tokenizer), readInt(tokenizer), readInt(tokenizer)));
                 }
                 else if (command.equals("inscrireJury"))
                 {
-                    // Lecture des parametres
-                    int nasJury = readInt(tokenizer);
-                    String prenomJury = readString(tokenizer);
-                    String nomJury = readString(tokenizer);
-                    String sexeJury = readString(tokenizer);
-                    int ageJury = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJury().ajouter(nasJury, prenomJury, nomJury, sexeJury, ageJury);
+                    gestionJustice.getGestionJury().ajouter(new TupleJury(readInt(tokenizer), readString(tokenizer),
+                            readString(tokenizer), readString(tokenizer), readInt(tokenizer)));
                 }
                 else if (command.equals("assignerJury"))
                 {
-                    // Lecture des parametres
-                    int nasJury = readInt(tokenizer);
-                    int idProces = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJury().assignerProces(nasJury, idProces);
+                    gestionJustice.getGestionJury().assignerProces(new TupleJury(readInt(tokenizer)),
+                            new TupleProces(readInt(tokenizer)));
                 }
                 else if (command.equals("ajouterSeance"))
                 {
-                    // Lecture des parametres
-                    int idSeance = readInt(tokenizer);
-                    int idProces = readInt(tokenizer);
-                    Date dateSeance = readDate(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionSeance().ajout(idSeance, idProces, dateSeance);
+                    gestionJustice.getGestionSeance()
+                            .ajout(new TupleSeance(readInt(tokenizer), readInt(tokenizer), readDate(tokenizer)));
                 }
                 else if (command.equals("supprimerSeance"))
                 {
-                    // Lecture des parametres
-                    int idSeance = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionSeance().supprimer(idSeance);
+                    gestionJustice.getGestionSeance().supprimer(new TupleSeance(readInt(tokenizer)));
                 }
                 else if (command.equals("terminerProces"))
                 {
-                    // Lecture des parametres
-                    int idProces = readInt(tokenizer);
-                    int decisionProces = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionProces().terminer(idProces, decisionProces);
+                    gestionJustice.getGestionProces().terminer(new TupleProces(readInt(tokenizer)), readInt(tokenizer));
                 }
                 else if (command.equals("afficherJuges"))
                 {
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJuge().affichage();
+                    tupleJuge = gestionJustice.getGestionJuge().affichage();
+
+                    System.out.println("\nListe des juges actifs et disponibles :");
+
+                    // Affichage des juges un à un
+                    for (int boucle = 0; boucle < tupleJuge.size(); boucle++)
+                    {
+                        System.out.println(tupleJuge.get(boucle).getId() + "\t" + tupleJuge.get(boucle).getPrenom()
+                                + "\t" + tupleJuge.get(boucle).getNom() + "\t" + tupleJuge.get(boucle).getAge());
+                    }
                 }
                 else if (command.equals("afficherProces"))
                 {
-                    // Lecture des parametres
-                    int idProces = readInt(tokenizer);
-
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionProces().affichage(idProces);
+                    tupleProces = gestionJustice.getGestionProces().affichage(new TupleProces(readInt(tokenizer)));
+
+                    System.out.println("Affichage du proces " + tupleProces.getId());
+
+                    System.out.println(tupleProces.getId() + "\t" + tupleProces.getJuge_id() + "\t"
+                            + tupleProces.getDate() + "\t" + tupleProces.getDevantJury() + "\t"
+                            + tupleProces.getPartieDefenderesse_id() + "\t" + tupleProces.getPartiePoursuivant_id());
+
+                    tupleSeance = gestionJustice.getGestionSeance().affichage(tupleProces);
+
+                    System.out.println("\nListe des séances liées au proces " + tupleProces.getId());
+
+                    // Affichage des séances une à une
+                    for (int boucle = 0; boucle < tupleSeance.size(); boucle++)
+                    {
+                        System.out.println(tupleSeance.get(boucle).getId() + "\t"
+                                + tupleSeance.get(boucle).getProces_id() + "\t" + tupleSeance.get(boucle).getDate());
+                    }
                 }
                 else if (command.equals("afficherJurys"))
                 {
                     // Appel de la methode qui traite la transaction specifique
-                    gestionJustice.getGestionJury().affichage();
+                    tupleJury = gestionJustice.getGestionJury().affichage();
+
+                    System.out.println("\nListe des jurys disponibles :");
+
+                    for (int boucle = 0; boucle < tupleJury.size(); boucle++)
+                    {
+                        System.out.println(tupleJury.get(boucle).getNas() + "\t" + tupleJury.get(boucle).getPrenom()
+                                + "\t" + tupleJury.get(boucle).getNom() + "\t" + tupleJury.get(boucle).getSexe() + "\t"
+                                + tupleJury.get(boucle).getAge() + "\t" + tupleJury.get(boucle).getProces_id());
+                    }
                 }
                 else
                 {

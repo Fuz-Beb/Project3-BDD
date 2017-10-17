@@ -1,10 +1,8 @@
-package Table;
+package tp3;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
 
 /**
  * Permet d'effectuer les accès à la table avocat.
@@ -59,18 +57,15 @@ public class TableAvocat
     /**
      * Ajout d'un nouvelle avocat dans la base de données
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param type
+     * @param tupleAvocat
      * @throws SQLException
      */
-    public void ajouter(int id, String prenom, String nom, int type) throws SQLException
+    public void ajouter(TupleAvocat tupleAvocat) throws SQLException
     {
-        stmtInsert.setInt(1, id);
-        stmtInsert.setString(2, prenom);
-        stmtInsert.setString(3, nom);
-        stmtInsert.setInt(4, type);
+        stmtInsert.setInt(1, tupleAvocat.getId());
+        stmtInsert.setString(2, tupleAvocat.getPrenom());
+        stmtInsert.setString(3, tupleAvocat.getNom());
+        stmtInsert.setInt(4, tupleAvocat.getType());
         stmtInsert.executeUpdate();
     }
 }

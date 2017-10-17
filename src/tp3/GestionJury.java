@@ -1,9 +1,6 @@
-package Gestion;
+package tp3;
 
-import Table.TableJury;
-import Table.TableProces;
-import tp3.Connexion;
-import tp3.IFT287Exception;
+import java.util.ArrayList;
 
 /**
  * Gestion des transactions de la table jury.
@@ -36,20 +33,16 @@ public class GestionJury
     /**
      * Ajout d'une jury dans la base de données
      * 
-     * @param nas
-     * @param prenom
-     * @param nom
-     * @param sexe
-     * @param age
+     * @param tupleJury
      * @throws Exception
      */
-    public void ajouter(int nas, String prenom, String nom, String sexe, int age) throws Exception
+    public void ajouter(TupleJury tupleJury) throws Exception
     {
         try
         {
-            if (jury.existe(nas))
-                throw new IFT287Exception("Jury existe déjà : " + nas);
-            jury.ajouter(nas, prenom, nom, sexe, age);
+            if (jury.existe(tupleJury.getNas()))
+                throw new IFT287Exception("Jury existe déjà : " + tupleJury.getNas());
+            jury.ajouter(tupleJury);
         }
         catch (Exception e)
         {
@@ -61,13 +54,21 @@ public class GestionJury
     /**
      * Afficher la liste des jurys
      * 
+     * @return ArrayList<TupleJury>
+     *
      * @throws Exception
      */
-    public void affichage() throws Exception
+    public ArrayList<TupleJury> affichage() throws Exception
     {
+        ArrayList<TupleJury> tupleJury = null;
+
         try
         {
-            System.out.println(jury.affichage());
+            tupleJury = jury.affichage();
+
+            cx.commit();
+
+            return tupleJury;
         }
         catch (Exception e)
         {
@@ -79,19 +80,19 @@ public class GestionJury
     /**
      * Assigner un proces à un jury
      * 
-     * @param idProces
-     * @param nas
+     * @param tupleProces
+     * @param tupleJury
      * @throws Exception
      */
-    public void assignerProces(int nas, int idProces) throws Exception
+    public void assignerProces(TupleJury tupleJury, TupleProces tupleProces) throws Exception
     {
         try
         {
-            if (!proces.existe(idProces))
-                throw new IFT287Exception("Proces n'existe pas : " + idProces);
-            if (!proces.devantJury(idProces))
-                throw new IFT287Exception("Le proces " + idProces + "doit se tenir devant un juge seul");
-            jury.assignerProces(nas, idProces);
+            if (!proces.existe(tupleProces.getId()))
+                throw new IFT287Exception("Proces n'existe pas : " + tupleProces.getId());
+            if (!proces.devantJury(tupleProces.getId()))
+                throw new IFT287Exception("Le proces " + tupleProces.getId() + "doit se tenir devant un juge seul");
+            jury.assignerProces(tupleJury, tupleProces);
         }
         catch (Exception e)
         {

@@ -1,8 +1,4 @@
-package Gestion;
-
-import Table.TableAvocat;
-import tp3.Connexion;
-import tp3.IFT287Exception;
+package tp3;
 
 /**
  * Gestion des transactions de la table avocat.
@@ -26,21 +22,18 @@ public class GestionAvocat
     /**
      * Ajout d'un nouvelle avocat dans la base de données
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param type
+     * @param tupleAvocat
      * @throws Exception
      */
-    public void ajouter(int id, String prenom, String nom, int type) throws Exception
+    public void ajouter(TupleAvocat tupleAvocat) throws Exception
     {
         try
         {
             // Vérifie si l'avocat existe déjà
-            if (avocat.existe(id))
-                throw new IFT287Exception("L'avocat existe déjà : " + id);
+            if (avocat.existe(tupleAvocat.getId()))
+                throw new IFT287Exception("L'avocat existe déjà : " + tupleAvocat.getId());
 
-            avocat.ajouter(id, prenom, nom, type);
+            avocat.ajouter(tupleAvocat);
 
             cx.commit();
         }

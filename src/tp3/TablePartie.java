@@ -1,13 +1,11 @@
 /**
  * 
  */
-package Table;
+package tp3;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import tp3.Connexion;
 
 /**
  * @author Bebo
@@ -63,19 +61,16 @@ public class TablePartie
     /**
      * Ajout d'un nouveau partie
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param avocat_id
+     * @param tuplePartie
      * @throws SQLException
      */
-    public void ajout(int id, String prenom, String nom, int avocat_id) throws SQLException
+    public void ajout(TuplePartie tuplePartie) throws SQLException
     {
         /* Ajout du partie. */
-        stmtInsertPartie.setInt(1, id);
-        stmtInsertPartie.setString(2, prenom);
-        stmtInsertPartie.setString(3, nom);
-        stmtInsertPartie.setInt(4, avocat_id);
+        stmtInsertPartie.setInt(1, tuplePartie.getId());
+        stmtInsertPartie.setString(2, tuplePartie.getPrenom());
+        stmtInsertPartie.setString(3, tuplePartie.getNom());
+        stmtInsertPartie.setInt(4, tuplePartie.getAvocat_id());
         stmtInsertPartie.executeUpdate();
     }
 }

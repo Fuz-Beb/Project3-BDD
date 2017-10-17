@@ -1,14 +1,9 @@
 /**
  * 
  */
-package Gestion;
+package tp3;
 
 import java.sql.SQLException;
-
-import Table.TableAvocat;
-import Table.TablePartie;
-import tp3.Connexion;
-import tp3.IFT287Exception;
 
 /**
  * @author Bebo
@@ -41,28 +36,25 @@ public class GestionPartie
      * Ajout d'un nouveau partie dans la base de données. S'il existe déjà, une
      * exception est levée.
      * 
-     * @param id
-     * @param prenom
-     * @param nom
-     * @param avocat_id
+     * @param tuplePartie
      * @throws SQLException
      * @throws IFT287Exception
      * @throws Exception
      */
-    public void ajout(int id, String prenom, String nom, int avocat_id) throws SQLException, IFT287Exception, Exception
+    public void ajout(TuplePartie tuplePartie) throws SQLException, IFT287Exception, Exception
     {
         try
         {
             // Vérifie si le partie existe déjà
-            if (partie.existe(id))
-                throw new IFT287Exception("Partie existe déjà: " + id);
+            if (partie.existe(tuplePartie.getId()))
+                throw new IFT287Exception("Partie existe déjà: " + tuplePartie.getId());
 
             // Vérifie si l'avocat existe
-            if (!avocat.existe(avocat_id))
-                throw new IFT287Exception("L'avocat " + avocat_id + "n'existe pas.");
+            if (!avocat.existe(tuplePartie.getAvocat_id()))
+                throw new IFT287Exception("L'avocat " + tuplePartie.getAvocat_id() + "n'existe pas.");
 
             // Ajout du partie
-            partie.ajout(id, prenom, nom, avocat_id);
+            partie.ajout(tuplePartie);
 
             // Commit
             cx.commit();
