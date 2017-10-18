@@ -40,7 +40,7 @@ public class GestionJury
     {
         try
         {
-            if (jury.existe(tupleJury.getNas()))
+            if (jury.existe(tupleJury))
                 throw new IFT287Exception("Jury existe déjà : " + tupleJury.getNas());
             jury.ajouter(tupleJury);
         }

@@ -3,7 +3,6 @@
  */
 package tp3;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,7 +64,7 @@ public class TableSeance
             do
             {
                 // Ajout de chacun des juges dans la liste
-                listSeance.add(getSeance(rset.getInt(1)));
+                listSeance.add(getSeance(new TupleSeance(rset.getInt(1))));
             }
             while (rset.next());
         }
@@ -87,19 +86,17 @@ public class TableSeance
     /**
      * Objet seance associé à une seance de la base de données
      * 
-     * @param id
+     * @param tupleSeance
      * @return TupleSeance
      * @throws SQLException
      */
-    public TupleSeance getSeance(int id) throws SQLException
+    public TupleSeance getSeance(TupleSeance tupleSeance) throws SQLException
     {
-        TupleSeance tupleSeance = null;
-
-        stmtExisteSeance.setInt(1, id);
+        stmtExisteSeance.setInt(1, tupleSeance.getId());
         ResultSet rset = stmtExisteSeance.executeQuery();
 
         if (rset.next())
-            tupleSeance = new TupleSeance(id, rset.getInt(2), rset.getDate(3));
+            tupleSeance = new TupleSeance(tupleSeance.getId(), rset.getInt(2), rset.getDate(3));
 
         rset.close();
         return tupleSeance;

@@ -46,11 +46,11 @@ public class GestionPartie
         try
         {
             // Vérifie si le partie existe déjà
-            if (partie.existe(tuplePartie.getId()))
+            if (partie.existe(tuplePartie))
                 throw new IFT287Exception("Partie existe déjà: " + tuplePartie.getId());
 
             // Vérifie si l'avocat existe
-            if (!avocat.existe(tuplePartie.getAvocat_id()))
+            if (!avocat.existe(new TupleAvocat(tuplePartie.getAvocat_id())))
                 throw new IFT287Exception("L'avocat " + tuplePartie.getAvocat_id() + "n'existe pas.");
 
             // Ajout du partie

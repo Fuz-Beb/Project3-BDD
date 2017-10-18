@@ -30,7 +30,7 @@ public class GestionAvocat
         try
         {
             // Vérifie si l'avocat existe déjà
-            if (avocat.existe(tupleAvocat.getId()))
+            if (avocat.existe(tupleAvocat))
                 throw new IFT287Exception("L'avocat existe déjà : " + tupleAvocat.getId());
 
             avocat.ajouter(tupleAvocat);

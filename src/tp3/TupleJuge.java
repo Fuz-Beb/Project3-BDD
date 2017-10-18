@@ -36,8 +36,6 @@ public class TupleJuge
      * @param prenom
      * @param nom
      * @param age
-     * @param disponible
-     * @param quitterJustice
      */
     public TupleJuge(int id, String prenom, String nom, int age)
     {

@@ -38,6 +38,16 @@ public class TuplePartie
     }
 
     /**
+     * Constructeur de confort
+     * 
+     * @param id
+     */
+    public TuplePartie(int id)
+    {
+        this.id = id;
+    }
+
+    /**
      * @return the id
      */
     public int getId()

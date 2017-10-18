@@ -48,20 +48,19 @@ public class TableJury
     /**
      * Objet jury associé à un jury de la base de données
      * 
-     * @param id
+     * @param tupleJury 
      * @return TupleJury
      * @throws SQLException
      * @throws IFT287Exception
      */
-    public TupleJury getJury(int id) throws SQLException, IFT287Exception
+    public TupleJury getJury(TupleJury tupleJury) throws SQLException, IFT287Exception
     {
-        TupleJury tupleJury = null;
 
-        stmtExiste.setInt(1, id);
+        stmtExiste.setInt(1, tupleJury.getNas());
         ResultSet rset = stmtExiste.executeQuery();
 
         if (rset.next())
-            tupleJury = new TupleJury(id, rset.getString(2), rset.getString(3), rset.getString(4), rset.getInt(5));
+            tupleJury = new TupleJury(tupleJury.getNas(), rset.getString(2), rset.getString(3), rset.getString(4), rset.getInt(5));
 
         // Si la decision a été prise
         if (rset.getObject(6) != null)
@@ -74,13 +73,13 @@ public class TableJury
     /**
      * Vérifie si le jury existe
      * 
-     * @param nas
+     * @param tupleJury 
      * @return boolean
      * @throws SQLException
      */
-    public boolean existe(int nas) throws SQLException
+    public boolean existe(TupleJury tupleJury) throws SQLException
     {
-        stmtExiste.setInt(1, nas);
+        stmtExiste.setInt(1, tupleJury.getNas());
         ResultSet rset = stmtExiste.executeQuery();
         boolean juryExiste = rset.next();
         rset.close();
@@ -105,7 +104,7 @@ public class TableJury
             do
             {
                 // Ajout de chacun des juges dans la liste
-                listJury.add(getJury(rset.getInt(1)));
+                listJury.add(getJury(new TupleJury(rset.getInt(1))));
             }
             while (rset.next());
         }

@@ -137,10 +137,10 @@ public class GestionProces
             // Vérification que l'id du juge est correcte
             if (!juge.existe(new TupleJuge(tupleProces.getJuge_id())))
                 throw new IFT287Exception("Le juge " + tupleProces.getJuge_id() + "n'existe pas.");
-            if (!partie.existe(tupleProces.getPartieDefenderesse_id()))
+            if (!partie.existe(new TuplePartie(tupleProces.getPartieDefenderesse_id())))
                 throw new IFT287Exception(
                         "La partie defenderesse " + tupleProces.getPartieDefenderesse_id() + "n'existe pas.");
-            if (!partie.existe(tupleProces.getPartiePoursuivant_id()))
+            if (!partie.existe(new TuplePartie(tupleProces.getPartiePoursuivant_id())))
                 throw new IFT287Exception(
                         "La partie poursuivante " + tupleProces.getPartiePoursuivant_id() + "n'existe pas.");
 
