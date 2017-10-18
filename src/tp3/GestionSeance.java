@@ -49,11 +49,11 @@ public class GestionSeance
                 throw new IFT287Exception("La seance existe deja: " + tupleSeance.getId());
 
             // Verification si le proces existe
-            if (!proces.existe(tupleSeance.getProces_id()))
+            if (!proces.existe(new TupleProces(tupleSeance.getProces_id())))
                 throw new IFT287Exception("Le proces " + tupleSeance.getProces_id() + " n'existe pas.");
 
             // Verification si le proces specifie n'est pas termine
-            if (!proces.verifierProcesTermine(tupleSeance.getProces_id()))
+            if (!proces.verifierProcesTermine(new TupleProces(tupleSeance.getProces_id())))
                 throw new IFT287Exception("Le proces " + tupleSeance.getProces_id() + " est termine.");
 
             seance.ajout(tupleSeance);
@@ -107,7 +107,7 @@ public class GestionSeance
 
         try
         {
-            if (!proces.existe(tupleProces.getId()))
+            if (!proces.existe(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "n'existe pas");
 
             listSeance = seance.affichage(tupleProces);

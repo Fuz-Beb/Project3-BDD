@@ -50,20 +50,18 @@ public class TableJuge
     /**
      * Objet juge associé à un juge de la base de données
      * 
-     * @param id
+     * @param tupleJuge
      * @return TupleJuge
      * @throws SQLException
      * @throws IFT287Exception
      */
-    public TupleJuge getJuge(int id) throws SQLException, IFT287Exception
+    public TupleJuge getJuge(TupleJuge tupleJuge) throws SQLException, IFT287Exception
     {
-        TupleJuge tupleJuge = null;
-
-        stmtExiste.setInt(1, id);
+        stmtExiste.setInt(1, tupleJuge.getId());
         ResultSet rset = stmtExiste.executeQuery();
 
         if (rset.next())
-            tupleJuge = new TupleJuge(id, rset.getString(2), rset.getString(3), rset.getInt(4));
+            tupleJuge = new TupleJuge(tupleJuge.getId(), rset.getString(2), rset.getString(3), rset.getInt(4));
 
         rset.close();
         return tupleJuge;
@@ -72,13 +70,13 @@ public class TableJuge
     /**
      * Vérifie si le juge existe
      * 
-     * @param idJuge
+     * @param tupleJuge
      * @return boolean
      * @throws SQLException
      */
-    public boolean existe(int idJuge) throws SQLException
+    public boolean existe(TupleJuge tupleJuge) throws SQLException
     {
-        stmtExiste.setInt(1, idJuge);
+        stmtExiste.setInt(1, tupleJuge.getId());
         ResultSet rset = stmtExiste.executeQuery();
         boolean jugeExiste = rset.next();
         rset.close();
@@ -103,7 +101,7 @@ public class TableJuge
             do
             {
                 // Ajout de chacun des juges dans la liste
-                listJuge.add(getJuge(rset.getInt(1)));
+                listJuge.add(getJuge(new TupleJuge(rset.getInt(1))));
             }
             while (rset.next());
         }
@@ -142,14 +140,14 @@ public class TableJuge
     /**
      * Changer la disponibilite d'un juge
      * 
-     * @param idJuge
      * @param disponibilite
+     * @param tupleJuge
      * @throws SQLException
      */
-    public void changerDisponibilite(boolean disponibilite, int idJuge) throws SQLException
+    public void changerDisponibilite(boolean disponibilite, TupleJuge tupleJuge) throws SQLException
     {
         stmtChangeDisponibilite.setBoolean(1, disponibilite);
-        stmtChangeDisponibilite.setInt(2, idJuge);
+        stmtChangeDisponibilite.setInt(2, tupleJuge.getId());
         stmtChangeDisponibilite.executeUpdate();
     }
 }

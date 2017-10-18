@@ -64,21 +64,19 @@ public class TableProces
     /**
      * Objet proces associé à un proces de la base de données
      * 
-     * @param id
+     * @param tupleProces
      * @return TupleJuge
      * @throws SQLException
      * @throws IFT287Exception
      */
-    public TupleProces getProces(int id) throws SQLException, IFT287Exception
+    public TupleProces getProces(TupleProces tupleProces) throws SQLException, IFT287Exception
     {
-        TupleProces tupleProces = null;
-
-        stmtExisteProces.setInt(1, id);
+        stmtExisteProces.setInt(1, tupleProces.getId());
         ResultSet rset = stmtExisteProces.executeQuery();
 
         if (rset.next())
-            tupleProces = new TupleProces(id, rset.getInt(2), rset.getDate(3), rset.getInt(4), rset.getInt(5),
-                    rset.getInt(6));
+            tupleProces = new TupleProces(tupleProces.getId(), rset.getInt(2), rset.getDate(3), rset.getInt(4),
+                    rset.getInt(5), rset.getInt(6));
 
         // Si la decision a été prise
         if (rset.getObject(7) != null)
@@ -91,13 +89,13 @@ public class TableProces
     /**
      * Verification de l'existance d'un proces
      * 
-     * @param id
+     * @param tupleProces
      * @return boolean
      * @throws SQLException
      */
-    public boolean existe(int id) throws SQLException
+    public boolean existe(TupleProces tupleProces) throws SQLException
     {
-        stmtExisteProces.setInt(1, id);
+        stmtExisteProces.setInt(1, tupleProces.getId());
         ResultSet rset = stmtExisteProces.executeQuery();
         boolean procesExiste = rset.next();
         rset.close();
@@ -121,7 +119,7 @@ public class TableProces
 
         if (rset.next())
         {
-            tupleProcesReturn = getProces(rset.getInt(1));
+            tupleProcesReturn = getProces(new TupleProces(rset.getInt(1)));
         }
 
         rset.close();
@@ -131,13 +129,13 @@ public class TableProces
     /**
      * Vérification que le proces a atteint sa date initiale
      * 
-     * @param id
+     * @param tupleProces
      * @return boolean
      * @throws SQLException
      */
-    public boolean compareDate(int id) throws SQLException
+    public boolean compareDate(TupleProces tupleProces) throws SQLException
     {
-        stmtSelectProcesNonTermine.setInt(1, id);
+        stmtSelectProcesNonTermine.setInt(1, tupleProces.getId());
         ResultSet rset = stmtSelectProcesNonTermine.executeQuery();
         boolean compareDate = rset.next();
         rset.close();
@@ -161,15 +159,15 @@ public class TableProces
     /**
      * Rendre le juge disponible si il n'a plus de proces en cours
      * 
-     * @param id
+     * @param tupleProces
      * @return int
      * @throws SQLException
      */
-    public int changeJugeStatut(int id) throws SQLException
+    public int changeJugeStatut(TupleProces tupleProces) throws SQLException
     {
         int idJuge = 0;
 
-        stmtSelectJugeDansProces.setInt(1, id);
+        stmtSelectJugeDansProces.setInt(1, tupleProces.getId());
         ResultSet rset = stmtSelectJugeDansProces.executeQuery();
 
         if (rset.next())
@@ -185,13 +183,13 @@ public class TableProces
     /**
      * Verifier si un juge a des proces en cours
      * 
-     * @param id
+     * @param tupleJuge
      * @return boolean
      * @throws SQLException
      */
-    public boolean jugeEnCours(int id) throws SQLException
+    public boolean jugeEnCours(TupleJuge tupleJuge) throws SQLException
     {
-        stmtProcesJugeEnCours.setInt(1, id);
+        stmtProcesJugeEnCours.setInt(1, tupleJuge.getId());
         ResultSet rset = stmtProcesJugeEnCours.executeQuery();
 
         if (rset.next())
@@ -224,13 +222,13 @@ public class TableProces
     /**
      * Verification si le proces specifie n'est pas termine
      * 
-     * @param idProces
+     * @param tupleProces
      * @return boolean
      * @throws SQLException
      */
-    public boolean verifierProcesTermine(int idProces) throws SQLException
+    public boolean verifierProcesTermine(TupleProces tupleProces) throws SQLException
     {
-        stmtVerificationProcesDecision.setInt(1, idProces);
+        stmtVerificationProcesDecision.setInt(1, tupleProces.getId());
         ResultSet rset = stmtVerificationProcesDecision.executeQuery();
         boolean procesTermine = rset.next();
         rset.close();
@@ -240,13 +238,13 @@ public class TableProces
     /**
      * Permet de savoir si un proces est devant un jury ou juge seul ou les deux
      * 
-     * @param id
+     * @param tupleProces
      * @return boolean
      * @throws SQLException
      */
-    public boolean devantJury(int id) throws SQLException
+    public boolean devantJury(TupleProces tupleProces) throws SQLException
     {
-        stmtVerificationProcesDevantJury.setInt(1, id);
+        stmtVerificationProcesDevantJury.setInt(1, tupleProces.getId());
         ResultSet rset = stmtVerificationProcesDevantJury.executeQuery();
         boolean devantJury = rset.next();
         rset.close();

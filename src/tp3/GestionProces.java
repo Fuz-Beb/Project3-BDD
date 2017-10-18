@@ -57,7 +57,7 @@ public class GestionProces
 
         try
         {
-            if (!proces.existe(tupleProces.getId()))
+            if (!proces.existe(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "n'existe pas");
 
             tupleProcesReturn = proces.affichage(tupleProces);
@@ -92,19 +92,19 @@ public class GestionProces
                         + "car la valeur de la decision n'est ni 0 ni 1.");
 
             // Vérification que le proces existe
-            if (!proces.existe(tupleProces.getId()))
+            if (!proces.existe(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "n'existe pas.");
 
             // Vérification que le proces a atteint sa date initiale
-            if (!proces.compareDate(tupleProces.getId()))
+            if (!proces.compareDate(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "n'a pas atteint sa date initiale.");
 
             proces.terminer(decisionProces, tupleProces);
 
-            idJuge = proces.changeJugeStatut(tupleProces.getId());
+            idJuge = proces.changeJugeStatut(tupleProces);
 
-            if (!proces.jugeEnCours(idJuge))
-                juge.changerDisponibilite(true, idJuge);
+            if (!proces.jugeEnCours(new TupleJuge(idJuge)))
+                juge.changerDisponibilite(true, new TupleJuge(idJuge));
 
             seance.supprimerSeancesProcesTermine(tupleProces.getId());
 
@@ -132,10 +132,10 @@ public class GestionProces
                         + "car le champ devantJury ne peut être que 0 ou 1");
 
             // Vérification que le proces n'existe pas déjà
-            if (proces.existe(tupleProces.getId()))
+            if (proces.existe(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "existe déjà.");
             // Vérification que l'id du juge est correcte
-            if (!juge.existe(tupleProces.getJuge_id()))
+            if (!juge.existe(new TupleJuge(tupleProces.getJuge_id())))
                 throw new IFT287Exception("Le juge " + tupleProces.getJuge_id() + "n'existe pas.");
             if (!partie.existe(tupleProces.getPartieDefenderesse_id()))
                 throw new IFT287Exception(
@@ -147,7 +147,7 @@ public class GestionProces
             proces.creer(tupleProces);
 
             // Rendre le juge non disponible
-            juge.changerDisponibilite(false, tupleProces.getJuge_id());
+            juge.changerDisponibilite(false, new TupleJuge(tupleProces.getJuge_id()));
             cx.commit();
         }
         catch (Exception e)

@@ -42,7 +42,7 @@ public class GestionJuge
     {
         try
         {
-            if (juge.existe(tupleJuge.getId()))
+            if (juge.existe(tupleJuge))
                 throw new IFT287Exception("Le juge existe déjà : " + tupleJuge.getId());
 
             juge.ajouter(tupleJuge);
@@ -83,9 +83,9 @@ public class GestionJuge
     {
         try
         {
-            if (!juge.existe(tupleJuge.getId()))
+            if (!juge.existe(tupleJuge))
                 throw new IFT287Exception("Juge inexistant : " + tupleJuge.getId());
-            if (proces.jugeEnCours(tupleJuge.getId()))
+            if (proces.jugeEnCours(tupleJuge))
                 throw new IFT287Exception("Le juge " + tupleJuge.getId() + " n'a pas terminé tout ses procès");
             juge.retirer(tupleJuge);
         }
