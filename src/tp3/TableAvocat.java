@@ -41,13 +41,13 @@ public class TableAvocat
     /**
      * Vérifie si l'avocat existe
      * 
-     * @param idAvocat
+     * @param tupleAvocat 
      * @return boolean
      * @throws SQLException
      */
-    public boolean existe(int idAvocat) throws SQLException
+    public boolean existe(TupleAvocat tupleAvocat) throws SQLException
     {
-        stmtExiste.setInt(1, idAvocat);
+        stmtExiste.setInt(1, tupleAvocat.getId());
         ResultSet rset = stmtExiste.executeQuery();
         boolean avocatExiste = rset.next();
         rset.close();

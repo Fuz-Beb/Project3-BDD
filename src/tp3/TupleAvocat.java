@@ -35,6 +35,16 @@ public class TupleAvocat
     }
 
     /**
+     * Constructeur de confort
+     * 
+     * @param id
+     */
+    public TupleAvocat(int id)
+    {
+        this.id = id;
+    }
+
+    /**
      * @return the id
      */
     public int getId()

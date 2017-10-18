@@ -45,13 +45,13 @@ public class TablePartie
     /**
      * Vérifie si un partie existe.
      * 
-     * @param idPartie
+     * @param tuplePartie 
      * @return boolean
      * @throws SQLException
      */
-    public boolean existe(int idPartie) throws SQLException
+    public boolean existe(TuplePartie tuplePartie) throws SQLException
     {
-        stmtExistePartie.setInt(1, idPartie);
+        stmtExistePartie.setInt(1, tuplePartie.getId());
         ResultSet rset = stmtExistePartie.executeQuery();
         boolean partieExiste = rset.next();
         rset.close();

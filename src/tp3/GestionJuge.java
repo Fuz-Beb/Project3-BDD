@@ -1,6 +1,5 @@
 package tp3;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
