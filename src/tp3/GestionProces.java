@@ -1,11 +1,7 @@
-/**
- * 
- */
 package tp3;
 
 /**
- * @author Bebo
- *
+ * Gestion des transactions de la table proces
  */
 public class GestionProces
 {

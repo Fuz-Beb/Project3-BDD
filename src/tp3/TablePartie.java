@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tp3;
 
 import java.sql.PreparedStatement;
@@ -8,8 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Bebo
- *
+ * Permet d'effectuer les accès à la table partie.
  */
 public class TablePartie
 {
@@ -45,7 +41,7 @@ public class TablePartie
     /**
      * Vérifie si un partie existe.
      * 
-     * @param tuplePartie 
+     * @param tuplePartie
      * @return boolean
      * @throws SQLException
      */

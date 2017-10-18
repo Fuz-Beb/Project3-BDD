@@ -1,6 +1,3 @@
-/**
- * 
- */
 package tp3;
 
 import java.sql.PreparedStatement;
@@ -9,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * @author Bebo
+ * Permet d'effectuer les accès à la table seance.
  *
  */
 public class TableSeance

@@ -1,13 +1,9 @@
-/**
- * 
- */
 package tp3;
 
 import java.sql.SQLException;
 
 /**
- * @author Bebo
- *
+ * Gestion des transactions de la table partie.
  */
 public class GestionPartie
 {

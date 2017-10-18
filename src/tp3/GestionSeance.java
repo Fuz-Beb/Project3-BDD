@@ -1,13 +1,9 @@
-/**
- * 
- */
 package tp3;
 
 import java.util.ArrayList;
 
 /**
- * @author Bebo
- *
+ * Gestion des transactions de la table seance.
  */
 public class GestionSeance
 {
