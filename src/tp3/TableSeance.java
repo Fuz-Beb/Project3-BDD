@@ -29,11 +29,11 @@ public class TableSeance
     public TableSeance(Connexion cx) throws SQLException
     {
         this.cx = cx;
-        stmtExisteSeance = cx.getConnection().prepareStatement("select * from \"Seance\" where id = ?");
+        stmtExisteSeance = cx.getConnection().prepareStatement("select * from \"Seance\" where \"id\" = ?");
         stmtExisteProcesDansSeance = cx.getConnection()
                 .prepareStatement("select * from \"Seance\" where \"Proces_id\" = ?");
         stmtSupprimerSeancesProcesTermine = cx.getConnection()
-                .prepareStatement("select * from \"Seance\" where \"Proces_id\" = ? and date > current_date");
+                .prepareStatement("select * from \"Seance\" where \"Proces_id\" = ? and \"date\" > current_date");
         stmtSeanceNonTerminee = cx.getConnection()
                 .prepareStatement("select * from \"Seance\" where \"id\" = ? and \"date\" < current_date");
         stmtSupprimerSeance = cx.getConnection().prepareStatement("delete from \"Seance\" where \"id\" = ?");
