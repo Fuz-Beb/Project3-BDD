@@ -45,6 +45,8 @@ public class GestionJuge
                 throw new IFT287Exception("Le juge existe déjà : " + tupleJuge.getId());
 
             juge.ajouter(tupleJuge);
+            
+            cx.commit();
         }
         catch (Exception e)
         {
@@ -63,6 +65,7 @@ public class GestionJuge
     {
         try
         {
+            cx.commit();
             return juge.affichage();
         }
         catch (Exception e)
@@ -87,6 +90,8 @@ public class GestionJuge
             if (proces.jugeEnCours(tupleJuge))
                 throw new IFT287Exception("Le juge " + tupleJuge.getId() + " n'a pas terminé tout ses procès");
             juge.retirer(tupleJuge);
+            
+            cx.commit();
         }
         catch (Exception e)
         {

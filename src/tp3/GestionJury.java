@@ -43,6 +43,8 @@ public class GestionJury
             if (jury.existe(tupleJury))
                 throw new IFT287Exception("Jury existe déjà : " + tupleJury.getNas());
             jury.ajouter(tupleJury);
+            
+            cx.commit();
         }
         catch (Exception e)
         {
@@ -93,6 +95,8 @@ public class GestionJury
             if (!proces.devantJury(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + "doit se tenir devant un juge seul");
             jury.assignerProces(tupleJury, tupleProces);
+            
+            cx.commit();
         }
         catch (Exception e)
         {
